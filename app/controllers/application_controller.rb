@@ -3,8 +3,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authenticate_user
-    # Some complicated code to check for user
-    @current_user = User.find(session[:user_id])
+    if session[:user_id]
+      @current_user = User.find(session[:user_id])
+    end
   end
 
   def signed_in?
@@ -16,6 +17,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_valid_user
-    redirect_to new_session_path if !!current_user
+
+    if current_user.nil?
+      flash[:notice] = "You must be logged in"
+      redirect_to login_path
+    end
   end
 end
