@@ -1,5 +1,13 @@
-<h1>Hello</h1>
+<h1><%= current_user.name %></h1>
+<h3>Current Groups</h3>
+<ul>
+  <% current_user.groups.uniq.each do |group| %>
+  <li><%= group.name %></li>
+<% end %>
+</ul>
 
-<%= link_to "See Groups", groups_path %>
+<p><%= link_to "See Groups", groups_path %></p>
 
-<%= link_to "Logout", logout_path %>
+<p><%= link_to "Edit", edit_user_path %></p>
+
+<p><%= link_to "Logout", logout_path %></p>

@@ -10,6 +10,10 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to @user
     else
+      if !@user
+        flash[:notice] = "User Not Found or Invalid Password"
+      end
+
       redirect_to login_path
     end
   end

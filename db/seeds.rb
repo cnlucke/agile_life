@@ -26,8 +26,8 @@
 #   t.datetime "created_at", null: false
 #   t.datetime "updated_at", null: false
 
-u = User.find_or_create_by(name: "John Smith")
-u2 = User.find_or_create_by(name: "Jane Doe")
+User.create(name: "John Smith", password: "hello")
+User.create(name: "Jane Doe", password: "hello")
 
 Group.find_or_create_by(name: "Blue", creator_id: 1, owner_id: 1)
 Group.find_or_create_by(name: "Red", creator_id: 1, owner_id: 2)
