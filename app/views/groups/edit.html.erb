@@ -1,0 +1,11 @@
+<h1>Edit Group</h1>
+
+<%= form_for @group do |f| %>
+  <%= f.label 'Group Name' %>
+  <%= f.text_field :name %><br>
+  <%= f.label 'Update Members' %>
+  <% User.all.each do |user| %>
+    <li><%= user.name %></li>
+  <% end %>
+  <%= f.submit %>
+<% end %>

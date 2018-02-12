@@ -1,9 +1,16 @@
 class GroupsController < ApplicationController
 
   def new
+    @group = Group.new
   end
 
   def create
+    @group = Group.new(name: group_params[:name], creator_id: current_user.id, owner_id: current_user.id)
+    if @group.save
+      redirect_to @group
+    else
+      redirect_to new_group_path
+    end
   end
 
   def index
@@ -11,10 +18,11 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.all
+    @group = Group.find(params[:id])
   end
 
   def edit
+    @group = Group.find(params[:id])
   end
 
   def update
@@ -25,11 +33,16 @@ class GroupsController < ApplicationController
     elsif params[:groupaction] == 'leave'
       @group.remove_member(current_user)
       redirect_to groups_path
+    else
+      @group.update(group_params)
+      redirect_to @group
     end
-
   end
 
   def destroy
+    @group = Group.find(params[:id])
+    @group.destroy
+    redirect_to groups_path
   end
 
   private
@@ -37,6 +50,5 @@ class GroupsController < ApplicationController
   def group_params
     params.require(:group).permit(:name, :creator_id, :owner_id)
   end
-
 
 end

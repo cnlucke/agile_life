@@ -17,6 +17,8 @@ class Group < ApplicationRecord
   has_many :tasks, class_name: 'Task'
   has_many :events, class_name: 'Event'
 
+  validates :name, uniqueness: true
+
   def add_member(user)
     members << user
     user.groups << self

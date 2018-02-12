@@ -1,7 +1,7 @@
 
 <ul>
   <% @groups.each do |group| %>
-    <li><%= group.name %> -
+    <li><%= link_to group.name, group %> -
     <% if group.has_member?(current_user) %>
       Member - <%= link_to 'Leave Group', "/groups/#{group.id}?groupaction=leave", method: 'PATCH' %></li>
 

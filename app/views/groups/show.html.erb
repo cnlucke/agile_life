@@ -1,1 +1,15 @@
 <h1><%= @group.name %></h1>
+
+<h3>Group Members</h3>
+<ul>
+  <% @group.members.each do |member| %>
+    <li><%= link_to member.name, member %></li>
+  <% end %>
+</ul>
+
+<h3>Tasks</h3>
+
+<h3>Events</h3>
+
+<%= link_to 'Edit Group', edit_group_path %><br>
+<%= link_to 'Delete Group', @group, method: 'DELETE' %>
