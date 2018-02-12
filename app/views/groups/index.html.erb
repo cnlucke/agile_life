@@ -1,0 +1,12 @@
+
+<ul>
+  <% @groups.each do |group| %>
+    <li><%= group.name %> -
+    <% if group.has_member?(current_user) %>
+      Member - <%= link_to 'Leave Group', "/groups/#{group.id}?groupaction=leave", method: 'PATCH' %></li>
+
+    <% else %>
+      <%= link_to 'Join Group', "/groups/#{group.id}?groupaction=join", method: 'PATCH' %></li>
+    <% end %>
+  <% end %>
+</ul>

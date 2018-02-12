@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  helper_method :current_user
 
-  def authenticate
+  def authenticate_user
     # Some complicated code to check for user
     @current_user = User.find(session[:user_id])
   end
