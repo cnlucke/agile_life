@@ -1,5 +1,5 @@
 <h1><%= current_user.name %></h1>
-<h3>Current Groups</h3>
+<h2>Current Groups</h2>
 <ul>
   <% if current_user.groups.count == 0 %>
     <li>none</li>
@@ -9,8 +9,11 @@
     <% end %>
   <% end %>
 </ul>
+<p><%= link_to "See All Groups", groups_path %></p>
 
-<p><%= link_to "See Groups", groups_path %></p>
+<h2><%= link_to "My Tasks", tasks_path %></h2>
+<h2><%= link_to "My Events", events_path %></h2>
+
 
 <p><%= link_to "Edit", edit_user_path %></p>
 

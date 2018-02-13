@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :authorize!, only: [:new, :create]
 
   def new
     @user = User.new
@@ -10,6 +11,7 @@ class UsersController < ApplicationController
       sign_in @user
       redirect_to user_path
     else
+      flash.now[:notice] = "User already exists."
       render 'new'
     end
   end

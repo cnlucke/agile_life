@@ -1,0 +1,3 @@
+<h1>Edit <%= @item.type %></h1>
+<%= render '/tasks/form' %>
+<%= link_to "Delete #{@item.type}", send("#{@item.type.downcase}_path"), method: 'delete' %>
