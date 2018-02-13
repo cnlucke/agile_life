@@ -10,7 +10,8 @@ class GroupsController < ApplicationController
     if @group.save
       redirect_to @group
     else
-      redirect_to new_group_path
+      flash[:notice] = "Group name already taken. Please choose a new group name."
+      render 'new'
     end
   end
 
