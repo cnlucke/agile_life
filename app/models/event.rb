@@ -24,4 +24,9 @@ class Event < Item
   belongs_to :group, optional: true
   belongs_to :parent, class_name: 'Item', optional: true
   has_many :children, foreign_key: :parent_id, class_name: 'Item'
+
+  def all_day?
+    time = [starts_at.hour, starts_at.min, starts_at.sec, ends_at.hour, ends_at.min, ends_at.sec]
+    (time.uniq.length == 1) && (time[0] == 0)
+  end
 end

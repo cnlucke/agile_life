@@ -1,5 +1,3 @@
-
-
 <%= form_for @item do |f| %>
 <h3><%= f.label "Title:" %>
   <%= f.text_field :title %></h3>
@@ -7,8 +5,10 @@
   <%= f.hidden_field :creator_id, value: current_user.id %>
 <p><%= f.label "Group (Optional):" %>
   <%= f.collection_select 'group_id', @groups, :id, :name, include_blank: true %></p>
+  <% if @item.type == 'Task' %>
 <p><%= f.label "Assign To:" %>
   <%= f.collection_select 'owner_id', @users, :id, :name, @item.owner.nil? ? {selected: current_user.id } : {selected: @item.owner_id } %></p>
+  <% end %>
 <p><%= f.label "Make This Task a Subtask Of:" %>
   <%= f.collection_select 'parent_id', @items, :id, :title, include_blank: true %></p>
 <p><%= f.label "Description:" %>
@@ -16,10 +16,11 @@
 <p><%= f.label "Notes:" %>
   <%= f.text_area :notes %></p>
   <% if @item.type == 'Event' %>
+    <p>All Day? <%= check_box_tag 'check_box', true, @item.all_day? %></p>
     <p><%= f.label :starts_at %>
-      <%= f.datetime_select(:starts_at, :order => [:month, :day, :year]) %> (Optional)</p>
+      <%= f.datetime_select :starts_at, :order => [:month, :day, :year], default: DateTime.now.beginning_of_day  %> (Optional)</p>
     <p><%= f.label :ends_at %>
-      <%= f.datetime_select(:ends_at, :order => [:month, :day, :year]) %> (Optional)</p>
+      <%= f.datetime_select :ends_at, :order => [:month, :day, :year], default: DateTime.now.end_of_day  %> (Optional)</p>
   <% end %>
   <p><%= f.submit %></p>
 <% end %>

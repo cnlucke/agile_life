@@ -17,8 +17,14 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.create(event_params)
-    redirect_to event_path(@event)
+    if params["event"]["check_box"] == 0
+      @event = Event.create(event_params)
+      redirect_to event_path(@event)
+    else
+      @event = Event.create(event_params)
+      all_day_start_date = @event.start_date
+      redirect_to event_path(@event)
+    end
   end
 
   def edit
@@ -29,9 +35,18 @@ class EventsController < ApplicationController
   end
 
   def update
+    binding.pry
     @event = Event.find_by(id: params[:id])
-    @event.update(event_params)
-    redirect_to event_path
+    if params["check_box"].nil?
+      @event.update(event_params)
+      redirect_to event_path
+    else
+      @event.update(event_params)
+      @event.starts_at = @event.starts_at.change({ hour: 0, min: 0, sec: 0 })
+      @event.ends_at = @event.ends_at.change({ hour: 0, min: 0, sec: 0 })
+      @event.save
+      redirect_to event_path(@event)
+    end
   end
 
   def destroy
