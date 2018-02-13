@@ -1,10 +1,14 @@
 class GroupsController < ApplicationController
+  before_action :group_member?, only: [:edit, :destroy]
+
   def new
     @group = Group.new
   end
 
   def create
     @group = Group.new(name: group_params[:name], creator_id: current_user.id, owner_id: current_user.id)
+    edit_group_members(@group)
+    @group.update(group_params)
     if @group.save
       redirect_to @group
     else
@@ -27,16 +31,14 @@ class GroupsController < ApplicationController
 
   def update
     @group = Group.find(params[:id])
-    if params[:groupaction] == 'join'
+    if params[:group_action] == 'join'
       @group.add_member(current_user)
       redirect_to groups_path
-    elsif params[:groupaction] == 'leave'
+    elsif params[:group_action] == 'leave'
       @group.remove_member(current_user)
       redirect_to groups_path
     else
-      members = params[:group][:member_ids].reject {|id| id.empty?}
-      members = members.map {|id| User.find(id)}
-      @group.members = members
+      edit_group_members(@group)
       @group.update(group_params)
       redirect_to @group
     end
@@ -52,6 +54,20 @@ class GroupsController < ApplicationController
 
   def group_params
     params.require(:group).permit(:name, :creator_id, :owner_id)
+  end
+
+  def group_member?
+    @group = Group.find(params[:id])
+    if !@group.has_member?(current_user)
+      flash[:notice] = "You must be a member of this group to edit or delete"
+      redirect_to @group
+    end
+  end
+
+  def edit_group_members(group)
+    members = params[:group][:member_ids].reject {|id| id.empty?}
+    members = members.map {|id| User.find(id)}
+    group.members = members
   end
 
 end
