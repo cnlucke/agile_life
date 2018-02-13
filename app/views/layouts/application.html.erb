@@ -16,8 +16,12 @@
   <div class="topnav">
     <a class="active" href="<%= user_path %>">Home</a>
     <a href="<%= groups_path %>">Groups</a>
-    <a href="#contact">Tasks</a>
-    <a href="#about">Events</a>
+    <a href="<%= tasks_path %>">Tasks</a>
+    <a href="<%= events_path %>">Events</a>
+    <% if !current_user %>
+      <a class="right-navbar" href="/session/new">Log In</a>
+      <a class="right-navbar" href="/user/new">Create Account</a>
+    <% end %>
   </div>
 
   <%= yield %>

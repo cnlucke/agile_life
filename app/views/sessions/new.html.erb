@@ -1,11 +1,11 @@
-<h1>Login</h1>
+<h1>Log In</h1>
 
 <% if flash[:notice] %>
   <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
 <% end %>
 <br>
 <%= form_tag session_path do %>
-  Name: <%= text_field_tag :name, params[:name] %>
-  Password: <%= password_field_tag :password %>
-  <%= submit_tag 'Submit' %>
+  Name: <%= text_field_tag :name, params[:name] %><br>
+  Password: <%= password_field_tag :password %><br>
+  <%= submit_tag 'Log In' %>
 <% end %>

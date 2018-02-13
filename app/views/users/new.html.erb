@@ -4,7 +4,7 @@
   <% if flash[:notice] == "User already exists." %>
     <p>Would you like to <%= link_to "login", new_session_path %>?</p>
   <% end %>
-<% end %>
+<% end %><br>
 
 
 <%= form_for @user, url: user_path do |f| %>
