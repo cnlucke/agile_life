@@ -1,5 +1,9 @@
 <h1>Create a New Group</h1>
 
+<% if flash[:notice] %>
+  <%= flash[:notice] %>
+<% end %>
+
 <%= form_for @group do |f| %>
   <%= f.label 'Group Name' %>
   <%= f.text_field :name %><br>

@@ -8,7 +8,8 @@ class GroupsController < ApplicationController
     if @group.save
       redirect_to @group
     else
-      redirect_to new_group_path
+      flash[:notice] = "Group name already taken. Please choose a new group name."
+      render 'new'
     end
   end
 
@@ -33,6 +34,9 @@ class GroupsController < ApplicationController
       @group.remove_member(current_user)
       redirect_to groups_path
     else
+      members = params[:group][:member_ids].reject {|id| id.empty?}
+      members = members.map {|id| User.find(id)}
+      @group.members = members
       @group.update(group_params)
       redirect_to @group
     end
