@@ -35,7 +35,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    binding.pry
     @event = Event.find_by(id: params[:id])
     if params["check_box"].nil?
       @event.update(event_params)

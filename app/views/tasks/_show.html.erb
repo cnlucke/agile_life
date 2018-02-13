@@ -1,5 +1,14 @@
 <h1><%= @item.title %></h1>
-
+<br>
+<% if @item.type == 'Event' %>
+<% if @item.all_day? %>
+<h3>Date: <%= @item.starts_at.strftime("%A, %B %d, %Y") %></h3>
+<% else %>
+<h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
+<h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
+<% end %>
+<% end %>
+<br>
 <h3>Creator: <%= @item.creator.name %></h3>
 <h3>Group: <%= @item.group.nil? ? "none" : @item.group.name %></h3>
 <% if @item.type == 'Task' %>
@@ -16,10 +25,6 @@
 <h3>Notes: </h3> <p><%= simple_format(@item.notes) %></p>
 <p><strong>Created:</strong> <%= @item.created_at.strftime("%A, %B %d, %Y at %l:%M %P") %></p>
 
-<% if @item.type == 'Event' %>
-  <h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
-  <h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
-<% end %>
 
 <p><%= link_to "Edit", send("edit_#{@item.type.downcase}_path") %></p>
 <p><%= link_to "See All #{@item.type.pluralize}", send("#{@item.type.downcase.pluralize}_path") %></p>
