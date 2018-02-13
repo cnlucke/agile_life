@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  before_action :group_member?, only: [:edit, :destroy]
+
   def new
     @group = Group.new
   end
@@ -52,6 +54,14 @@ class GroupsController < ApplicationController
 
   def group_params
     params.require(:group).permit(:name, :creator_id, :owner_id)
+  end
+
+  def group_member?
+    @group = Group.find(params[:id])
+    if !@group.members.include?(current_user)
+      flash[:notice] = "You must be a member of this group to edit or delete"
+      redirect_to @group
+    end
   end
 
 end

@@ -1,3 +1,7 @@
+<% if flash[:notice] %>
+  <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
+<% end %>
+
 <h1><%= @group.name %></h1>
 
 <h3>Group Members</h3>
@@ -23,6 +27,13 @@
     <li><%= link_to event.title, event %></li>
   <% end %>
 </ul>
+
+<% if @group.has_member?(current_user) %>
+  <%= link_to 'Leave Group', "/groups/#{@group.id}?groupaction=leave", method: 'PATCH' %></li>
+
+<% else %>
+  <%= link_to 'Join Group', "/groups/#{@group.id}?groupaction=join", method: 'PATCH' %></li>
+<% end %><br>
 
 <%= link_to 'Edit Group', edit_group_path %><br>
 <%= link_to 'Delete Group', @group, method: 'DELETE' %>
