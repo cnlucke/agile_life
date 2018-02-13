@@ -1,14 +1,27 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>AgileLife</title>
-    <%= csrf_meta_tags %>
+<html lang="en">
+<head>
+  <title>AgileLife</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <%= stylesheet_link_tag "application.css" %>
+</head>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<body>
 
-  <body>
-    <%= yield %>
-  </body>
+
+
+<div class="container-fluid">
+  <div class="topnav">
+    <a class="active" href="<%= user_path %>">Home</a>
+    <a href="<%= groups_path %>">Groups</a>
+    <a href="#contact">Tasks</a>
+    <a href="#about">Events</a>
+  </div>
+
+  <%= yield %>
+</div>
+
+</body>
 </html>

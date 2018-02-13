@@ -29,10 +29,19 @@
 </ul>
 
 <% if @group.has_member?(current_user) %>
-  <%= link_to 'Leave Group', "/groups/#{@group.id}?groupaction=leave", method: 'PATCH' %></li>
-
+  <form action="<%= group_path(@group) %>" method="post">
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="group_action" value="leave">
+    <input type="submit" value="Leave Group">
+  </form>
 <% else %>
-  <%= link_to 'Join Group', "/groups/#{@group.id}?groupaction=join", method: 'PATCH' %></li>
+  <form action="<%= group_path(@group) %>" method="post">
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="group_action" value="join">
+    <input type="submit" value="Join Group">
+  </form>
 <% end %><br>
 
 <%= link_to 'Edit Group', edit_group_path %><br>
