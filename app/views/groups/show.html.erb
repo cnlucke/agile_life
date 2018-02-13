@@ -9,7 +9,20 @@
 
 <h3>Tasks</h3>
 
+<ul>
+  <% @group.tasks.each do |task| %>
+    <li><%= link_to task.title, task %></li>
+  <% end %>
+</ul>
+
+
 <h3>Events</h3>
+
+<ul>
+  <% @group.events.each do |event| %>
+    <li><%= link_to event.title, event %></li>
+  <% end %>
+</ul>
 
 <%= link_to 'Edit Group', edit_group_path %><br>
 <%= link_to 'Delete Group', @group, method: 'DELETE' %>
