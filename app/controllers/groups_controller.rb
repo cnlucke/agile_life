@@ -58,7 +58,7 @@ class GroupsController < ApplicationController
 
   def group_member?
     @group = Group.find(params[:id])
-    if !@group.members.include?(current_user)
+    if !@group.has_member?(current_user)
       flash[:notice] = "You must be a member of this group to edit or delete"
       redirect_to @group
     end
