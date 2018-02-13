@@ -17,17 +17,17 @@ class Group < ApplicationRecord
   has_many :tasks, class_name: 'Task'
   has_many :events, class_name: 'Event'
 
-  validates :name, uniqueness: true
+  validates :name, presence: true, uniqueness: true
 
   def add_member(user)
     members << user
-    user.groups << self
+    # user.groups << self
     # Membership.create(user: user, group: self)
   end
 
   def remove_member(user)
     members.destroy(user)
-    user.groups.destroy(self)
+    # user.groups.destroy(self)
     # m = Membership.all.select { |m| m.user_id == user.id && m.group_id == self.id }
     # m.each { |m| m.destroy }
   end

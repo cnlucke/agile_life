@@ -1,13 +1,17 @@
 <h1><%= current_user.name %></h1>
 <h3>Current Groups</h3>
 <ul>
-  <% current_user.groups.uniq.each do |group| %>
-  <li><%= group.name %></li>
-<% end %>
+  <% if current_user.groups.count == 0 %>
+    <li>none</li>
+  <% else %>
+    <% current_user.groups.each do |group| %>
+      <li><%= group.name %></li>
+    <% end %>
+  <% end %>
 </ul>
 
 <p><%= link_to "See Groups", groups_path %></p>
 
 <p><%= link_to "Edit", edit_user_path %></p>
 
-<p><%= link_to "Logout", logout_path %></p>
+<p><%= link_to "Logout", session_path, method: :delete %></p>

@@ -1,11 +1,11 @@
 <h1>Edit</h1>
 
-<%= form_for current_user, url: current_user do |f| %>
+<%= form_for @user, url: user_path do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %><br>
   <%= f.label :password %>
   <%= f.password_field :password %><br>
   <%= f.submit %>
   <br>
-  <%= link_to "delete account", current_user, :method => 'delete' %>
+  <%= link_to "delete account", user_path, :method => 'delete' %>
 <% end %>

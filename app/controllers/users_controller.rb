@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_valid_user
-  
+
   def new
     @user = User.new
   end
@@ -8,27 +7,31 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      session[:user_id] = @user.id
-      redirect_to @user
+      sign_in @user
+      redirect_to user_path
     else
-      redirect_to signup_path
+      render 'new'
     end
   end
 
   def show
+    @user = current_user
   end
 
   def edit
+    @user = current_user
   end
 
   def update
-    current_user.update(user_params)
-    redirect_to current_user
+    @user = current_user
+    @user.update(user_params)
+    redirect_to user_path
   end
 
   def destroy
     current_user.destroy
-    redirect_to signup_path
+    flash[:notice] = "You've successfully logged out."
+    redirect_to new_user_path
   end
 
   private
