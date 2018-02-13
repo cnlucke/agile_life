@@ -21,15 +21,10 @@ class Group < ApplicationRecord
 
   def add_member(user)
     members << user
-    # user.groups << self
-    # Membership.create(user: user, group: self)
   end
 
   def remove_member(user)
     members.destroy(user)
-    # user.groups.destroy(self)
-    # m = Membership.all.select { |m| m.user_id == user.id && m.group_id == self.id }
-    # m.each { |m| m.destroy }
   end
 
   def has_member?(user)
