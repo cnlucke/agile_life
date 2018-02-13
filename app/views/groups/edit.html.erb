@@ -3,9 +3,7 @@
 <%= form_for @group do |f| %>
   <%= f.label 'Group Name' %>
   <%= f.text_field :name %><br>
-  <%= f.label 'Update Members' %>
-  <% User.all.each do |user| %>
-    <li><%= user.name %></li>
-  <% end %>
+  <%= f.label 'Update Members' %><br>
+  <%= f.collection_check_boxes :member_ids, User.all, :id, :name %><br>
   <%= f.submit %>
 <% end %>
