@@ -1,14 +1,21 @@
 Rails.application.routes.draw do
-  get '/login', to: 'sessions#new', as: 'login'
-  post '/login', to: 'sessions#create'
-  get '/logout', to: 'sessions#destroy', as: 'logout'
-  get '/signup', to: 'users#new'
-  resources :users, except: [:new] do
-    resources :tasks
-    resources :events
+  namespace :groups do
+    get 'tasks/index'
   end
+
+  namespace :groups do
+    get 'tasks/show'
+  end
+
+  resource :session, only: [:new, :create, :destroy]
+  resource :user
+  resources :tasks
+  resources :events
+
   resources :groups do
-    resources :tasks, only: [:index, :show]
-    resources :events, only: [:index, :show]
+    scope module: :groups do
+      resources :tasks, only: [:index, :show]
+      resources :events, only: [:index, :show]
+    end
   end
 end

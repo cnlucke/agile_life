@@ -1,6 +1,4 @@
 class GroupsController < ApplicationController
-  before_action :require_valid_user
-
   def new
     @group = Group.new
   end

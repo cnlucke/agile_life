@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :authorize!
 
   def new
   end
@@ -7,19 +8,17 @@ class SessionsController < ApplicationController
     @user = User.find_by(name: params[:name])
     # If they exist and correct password
     if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      redirect_to @user
+      sign_in @user
+      redirect_to user_path
     else
-      if !@user
-        flash[:notice] = "User Not Found or Invalid Password"
-      end
-
-      redirect_to login_path
+      flash.now[:notice] = "Invalid User/Password Combination"
+      render 'new'
     end
+
   end
 
   def destroy
     session.clear
-    redirect_to login_path
+    redirect_to new_session_path
   end
 end
