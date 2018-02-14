@@ -11,8 +11,13 @@ class UsersController < ApplicationController
       sign_in @user
       redirect_to user_path
     else
-      flash.now[:notice] = "User already exists."
-      render 'new'
+      if User.all.find_by(name: user_params[:name]).active ##user name already exists
+        flash.now[:notice] = "User already exists."
+        render 'new'
+      else
+        flash.now[:notice] = "User exists, but is no longer active."
+        render 'new'
+      end
     end
   end
 
@@ -32,8 +37,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    current_user.destroy
-    flash[:notice] = "You've successfully logged out."
+    current_user.active = false
+    if current_user.save
+      Task.owned(current_user).map do |i|
+        i.update!(owner_id: unassigned.id) #Unassign all user's tasks
+      end
+    end
     redirect_to new_user_path
   end
 
@@ -43,6 +52,10 @@ class UsersController < ApplicationController
     params.require(:user).permit(:id, :name, :password)
   end
 
+  def unassigned
+    User.find_by(name: "unassigned")
+  end
+  
   def sorted_events
     current_user.created_events.sort{|x,y| x.starts_at <=> y.starts_at}
   end

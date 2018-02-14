@@ -4,15 +4,16 @@ class EventsController < ApplicationController
 
   def index
     @type = 'Event'
-    @created = Item.created(current_user).select { |i| i.type == @type  }
-    @owned = Item.owned(current_user).select { |i| i.type == @type  }
+    @created = Event.created(current_user)
   end
 
   def show
+    @type = 'Event'
     @item = Event.find(params[:id])
   end
 
   def new
+    @type = 'Event'
     @item = Event.new
     @groups = Group.all
     @users = User.all

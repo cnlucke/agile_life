@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20180212150504) do
     t.string "type"
     t.integer "creator_id"
     t.integer "group_id"
-    t.integer "owner_id"
+    t.integer "owner_id", default: 1
     t.integer "parent_id"
     t.string "title"
     t.string "description"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20180212150504) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "password_digest"
+    t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

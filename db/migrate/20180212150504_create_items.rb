@@ -4,7 +4,7 @@ class CreateItems < ActiveRecord::Migration[5.1]
       t.string :type
       t.integer :creator_id
       t.integer :group_id
-      t.integer :owner_id
+      t.integer :owner_id, default: "1"
       t.integer :parent_id
       t.string :title
       t.string :description
