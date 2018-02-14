@@ -18,7 +18,7 @@
   <%= f.collection_select 'owner_id', @users, :id, :name, @item.owner.nil? ? {selected: current_user.id } : {selected: @item.owner_id } %></p>
   <% end %>
 <p><%= f.label "Make This Task a Subtask Of:" %>
-  <%= f.collection_select 'parent_id', @items, :id, :title, include_blank: true %></p>
+  <%= f.collection_select 'parent_id', @available_items, :id, :title, include_blank: true %></p>
 <p><%= f.label "Description:" %>
   <%= f.text_area :description %></p>
 <p><%= f.label "Notes:" %>

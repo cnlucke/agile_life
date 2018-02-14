@@ -1,5 +1,9 @@
 <h1><%= @type.pluralize %></h1>
 
+<% if flash[:notice] %>
+  <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
+<% end %>
+
 <h3><%= @type.pluralize %> You Own:</h3>
 <ul>
   <% @owned.each do |t| %>
@@ -10,7 +14,7 @@
 <h3><%= @type.pluralize %> Created:</h3>
 <ul>
   <% @created.each do |t| %>
-  <li><%= link_to t.title, t %> (<%= t.owner.name %>)</li>
+  <li><%= link_to t.title, t %> <%= t.owner.name if t.owner %></li>
   <% end %>
 </ul>
 

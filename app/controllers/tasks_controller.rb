@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :load_available_items
   def index
     @type = 'Task'
     @created = Item.created(current_user).select { |i| i.type == @type  }
@@ -6,42 +7,48 @@ class TasksController < ApplicationController
   end
 
   def show
-    @item = Task.find_by(id: params[:id])
+    @item = Task.find(params[:id])
   end
 
   def new
-    @item = Task.new(creator_id: current_user.id)
-    @items = Task.all
+    @item = Task.new
     @groups = Group.all
     @users = User.all
   end
 
   def create
-    @task = Task.create(task_params)
-    redirect_to task_path(@task)
+    @item = Task.create!(task_params)
+    flash[:notice] = "Task successfully created."
+    redirect_to task_path(@item)
   end
 
   def edit
-    @item = Task.find_by(id: params[:id])
-    @items = Task.all
+    @item = Task.find(params[:id])
     @groups = Group.all
     @users = User.all
+    @available_items = @available_items.reject {|item| @item.id == item.id}
   end
 
   def update
-    @task = Task.find_by(id: params[:id])
-    @task.update(task_params)
+    @item = Task.find(params[:id])
+    @item.update!(task_params)
+    flash[:notice] = "Task successfully updated."
     redirect_to task_path
   end
 
   def destroy
-    binding.pry
-    @task = Task.find_by(id: params[:id])
+    @task = Task.find(params[:id])
     @task.destroy
+    flash[:notice] = "Task successfully deleted."
     redirect_to tasks_path
   end
 
   private
+
+  def load_available_items
+    @available_items = Task.all
+  end
+
   def task_params
     params.require(:task).permit(:creator_id, :group_id, :owner_id, :parent_id, :title, :description, :status, :notes, :starts_at, :ends_at)
   end

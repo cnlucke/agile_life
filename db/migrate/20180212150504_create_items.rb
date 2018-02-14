@@ -8,7 +8,7 @@ class CreateItems < ActiveRecord::Migration[5.1]
       t.integer :parent_id
       t.string :title
       t.string :description
-      t.string :status
+      t.string :status, default: "created"
       t.text :notes
       t.datetime :starts_at
       t.datetime :ends_at

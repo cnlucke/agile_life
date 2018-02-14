@@ -33,4 +33,10 @@ class Event < Item
       (time.uniq.length == 1) && (time[0] == 0)
     end
   end
+
+  def set_all_day
+    self.starts_at = self.starts_at.change({ hour: 0, min: 0, sec: 0 })
+    self.ends_at = self.ends_at.change({ hour: 0, min: 0, sec: 0 })
+    self.save
+  end
 end

@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20180212150504) do
     t.integer "parent_id"
     t.string "title"
     t.string "description"
-    t.string "status"
+    t.string "status", default: "created"
     t.text "notes"
     t.datetime "starts_at"
     t.datetime "ends_at"
