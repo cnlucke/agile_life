@@ -15,7 +15,7 @@
   <%= f.collection_select 'group_id', @groups, :id, :name, include_blank: true %></p>
   <% if @item.type == 'Task' %>
 <p><%= f.label "Assign To:" %>
-  <%= f.collection_select 'owner_id', @users, :id, :name, @item.owner.nil? ? {selected: current_user.id } : {selected: @item.owner_id } %></p>
+  <%= f.collection_select 'owner_id', @users, :id, :name, @item.owner.nil? ? {selected: @users.first } : {selected: @item.owner_id } %></p>
   <% end %>
 <p><%= f.label "Make This Task a Subtask Of:" %>
   <%= f.collection_select 'parent_id', @available_items, :id, :title, include_blank: true %></p>

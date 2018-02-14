@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
   before_action :load_available_items
+  before_action :authorize!
+
   def index
     @type = 'Task'
     @created = Item.created(current_user).select { |i| i.type == @type  }

@@ -4,16 +4,16 @@
   <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
 <% end %>
 <% if @item.type == 'Event' %>
-<% if @item.all_day? %>
-<h3>Date: <%= @item.starts_at.strftime("%A, %B %d, %Y") %></h3>
-<% else %>
-<h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
-<h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
-<% end %>
+  <% if @item.all_day? %>
+  <h3>Date: <%= @item.starts_at.strftime("%A, %B %d, %Y") %></h3>
+  <% else %>
+  <h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
+  <h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
+  <% end %>
 <% end %>
 <br>
 <% if @item.type == 'Task' %>
-<h3>Status: <%= @item.status %></h3>
+  <h3>Status: <strong><%= @item.status.upcase %></strong></h3>
 <% end %>
 <br>
 <h3>Creator: <%= @item.creator.name %></h3>
