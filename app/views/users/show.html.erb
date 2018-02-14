@@ -1,8 +1,11 @@
-<h1><%= current_user.name %></h1>
+<br>
 <br>
 
-<h3>My Tasks</h3>
+<h1><%= current_user.name %></h1>
+<br>
+<br>
 
+<h3>My Tasks <a href="<%= new_task_path %>" class="btn btn-primary btn-sm">New Task</a></h3>
 <br>
 
 <% if current_user.created_tasks.count == 0 && current_user.owned_tasks.count == 0%>
@@ -12,10 +15,11 @@
     <thead class="thead-default">
       <tr>
         <th>Title</th>
-        <th>Creator</th>
+        <th>Created By</th>
         <th>Assigned To</th>
-        <th>Created</th>
-        <th>Status</th>
+        <th>Associated Group</th>
+        <th>Created On</th>
+        <th>Current Status</th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +33,7 @@
             <td>You</td>
             <td><%= task.owner.name %></td>
           <% end %>
+          <td><%= task.group ? task.group.name : "none" %></td>
           <td><%= task.created_at.strftime("%m/%d/%y") %></td>
           <td><%= task.status %></td>
         </tr>
@@ -44,6 +49,7 @@
             <% else %>
               <td><%= task.owner.name %></td>
             <% end %>
+            <td><%= task.group ? task.group.name : "none" %></td>
             <td><%= task.created_at.strftime("%m/%d/%y") %></td>
             <td><%= task.status %></td>
           </tr>
@@ -54,59 +60,58 @@
 <% end %>
 
 <br>
+<br>
 
 <div class="container">
-
-<h3>Upcoming Events</h3>
-
-<div class="agenda">
-  <div class="table-responsive">
-    <table class="table table-condensed table-bordered">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Event</th>
-        </tr>
-      </thead>
-        <tbody>
-          <% sorted = current_user.created_events.sort{|x,y| x.starts_at <=> y.starts_at} %>
-          <% date = [] %>
-          <% sorted.each do |event| %>
-            <% if event.starts_at.strftime("%d") != date %>
-              <tr>
-                <td class="agenda-date" class="active" rowspan="<%= sorted.count {|e| e.starts_at.strftime("%d") == event.starts_at.strftime("%d")} %>">
-                  <div class="dayofmonth"><%= event.starts_at.strftime("%d") %></div>
-                  <div class="dayofweek"><%= event.starts_at.strftime("%A") %></div>
-                  <div class="shortdate text-muted"><%= event.starts_at.strftime("%B, %Y") %></div>
-                </td>
-                <td class="agenda-time">
-                  <% if event.starts_at.strftime("%I:%M") == event.ends_at.strftime("%I:%M") %>
-                    All Day
-                  <% else %>
-                    <%= event.starts_at.strftime("%I:%M %p") %> - <%= event.ends_at.strftime("%I:%M %p") %>
-                  <% end %>
-                </td>
-                <td class="agenda-events">
-                  <div class="agenda-event">
-                    <%= link_to event.title, event %>
-                  </div>
-                </td>
-                <% date = event.starts_at.strftime("%d") %>
-              <% else %>
-                <td class="agenda-time">
-                  <% if event.starts_at.strftime("%I:%M") == event.ends_at.strftime("%I:%M") %>
-                    All Day
-                  <% else %>
-                    <%= event.starts_at.strftime("%I:%M %p") %> - <%= event.ends_at.strftime("%I:%M %p") %>
-                  <% end %>
-                </td>
-                <td class="agenda-events">
-                  <div class="agenda-event">
-                    <%= link_to event.title, event %>
-                  </div>
-                </td>
-              <% end %>
+  <h3>Upcoming Events <a href="<%= new_event_path %>" class="btn btn-primary btn-sm">New Event</a></h3>
+  <br>
+  <div class="agenda">
+    <div class="table-responsive">
+      <table class="table table-condensed table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Event</th>
+          </tr>
+        </thead>
+          <tbody>
+            <% date = [] %>
+            <% @sorted_events.each do |event| %>
+              <% if event.starts_at.strftime("%d") != date && event.starts_at > Time.now %>
+                <tr>
+                  <td class="agenda-date" class="active" rowspan="<%= @sorted_events.count {|e| e.starts_at.strftime("%d") == event.starts_at.strftime("%d")} %>">
+                    <div class="dayofmonth"><%= event.starts_at.strftime("%d") %></div>
+                    <div class="dayofweek"><%= event.starts_at.strftime("%A") %></div>
+                    <div class="shortdate text-muted"><%= event.starts_at.strftime("%B, %Y") %></div>
+                  </td>
+                  <td class="agenda-time">
+                    <% if event.starts_at.strftime("%I:%M") == event.ends_at.strftime("%I:%M") %>
+                      All Day
+                    <% else %>
+                      <%= event.starts_at.strftime("%I:%M %p") %> - <%= event.ends_at.strftime("%I:%M %p") %>
+                    <% end %>
+                  </td>
+                  <td class="agenda-events">
+                    <div class="agenda-event">
+                      <%= link_to event.title, event %>
+                    </div>
+                  </td>
+                  <% date = event.starts_at.strftime("%d") %>
+                  <% elsif event.starts_at > Time.now %>
+                  <td class="agenda-time">
+                    <% if event.starts_at.strftime("%I:%M") == event.ends_at.strftime("%I:%M") %>
+                      All Day
+                    <% else %>
+                      <%= event.starts_at.strftime("%I:%M %p") %> - <%= event.ends_at.strftime("%I:%M %p") %>
+                    <% end %>
+                  </td>
+                  <td class="agenda-events">
+                    <div class="agenda-event">
+                      <%= link_to event.title, event %>
+                    </div>
+                  </td>
+                <% end %>
               </tr>
             <% end %>
         </tbody>
