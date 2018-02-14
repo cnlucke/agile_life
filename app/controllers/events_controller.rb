@@ -1,19 +1,16 @@
 class EventsController < ApplicationController
-  before_action :load_available_items
-  before_action :authorize!
+  before_action :load_available_items, :authorize!, :set_type
 
   def index
-    @type = 'Event'
     @created = Event.created(current_user)
+    @sorted_events = sorted_events
   end
 
   def show
-    @type = 'Event'
     @item = Event.find(params[:id])
   end
 
   def new
-    @type = 'Event'
     @item = Event.new
     @groups = Group.all
     @users = User.all
@@ -33,7 +30,6 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @type
     @item = Event.find(params[:id])
     @groups = Group.all
     @users = User.all
@@ -71,6 +67,15 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:creator_id, :group_id, :owner_id, :parent_id, :title, :description, :status, :notes, :starts_at, :ends_at)
   end
+
+  def sorted_events
+    current_user.created_events.sort{|x,y| x.starts_at <=> y.starts_at}
+  end
+
+  def set_type
+    @type = "Event"
+  end
+
   #  type        :string
   #  creator_id  :integer
   #  group_id    :integer

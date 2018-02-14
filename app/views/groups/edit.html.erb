@@ -1,10 +1,12 @@
-<br>
-<h1>Edit Group</h1>
+<div class="container">
+  <br>
+  <h1>Edit Group</h1>
 
-<%= form_for @group do |f| %>
-  <%= f.label 'Group Name' %>
-  <%= f.text_field :name %><br>
-  <%= f.label 'Update Members' %><br>
-  <%= f.collection_check_boxes :member_ids, User.all, :id, :name %><br>
-  <%= f.submit %>
-<% end %>
+  <%= form_for @group do |f| %>
+    <%= f.label 'Group Name' %>
+    <%= f.text_field :name %><br>
+    <%= f.label 'Update Members' %><br>
+    <%= f.collection_check_boxes :member_ids, User.all, :id, :name %><br>
+    <%= f.submit %>
+  <% end %>
+</div>

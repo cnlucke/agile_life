@@ -1,36 +1,37 @@
-<h1><%= @item.title %></h1>
-<% if flash[:notice] %>
-  <div class="alert alert-success" role="alert"><strong><%= flash[:notice] %></strong></div>
-<% end %>
-<% if @item.type == 'Event' %>
-  <% if @item.all_day? %>
-  <p>Date: <%= @item.starts_at.strftime("%A, %B %d, %Y") %></p>
-  <% else %>
-  <h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
-  <h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
+<div class="container">
+  <h1><%= @item.title %></h1>
+  <% if flash[:notice] %>
+    <div class="alert alert-success" role="alert"><strong><%= flash[:notice] %></strong></div>
   <% end %>
-<% else %>
-  <p><strong>Status:</strong> <strong><%= @item.status.upcase %></strong></p>
-  <p><strong>Owner:</strong> <%= @item.owner.nil? ? "none" : @item.owner.name %></p>
-<% end %>
-<p><strong>Group:</strong> <%= @item.group.nil? ? "none" : @item.group.name %></p>
-<% if @item.type == 'Task' %>
-<% end %>
-<p><strong>Parent Task:</strong> <%= @item.parent.nil? ? "none" : (link_to @item.parent.title, @item.parent) %></p>
-<p><strong>SubTasks:</strong> <%= "none" if @item.children.empty? %></p>
-  <p>
-    <% @item.children.each do |child| %>
-      <li><%= link_to child.title, child %>  </li>
+  <% if @item.type == 'Event' %>
+    <% if @item.all_day? %>
+    <p>Date: <%= @item.starts_at.strftime("%A, %B %d, %Y") %></p>
+    <% else %>
+    <h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
+    <h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
     <% end %>
-  </p>
-<p><strong>Description:</strong> <%= @item.description %></p>
-<p><strong>Notes:</strong> </p> <p><%= simple_format(@item.notes) %></p>
-<p><strong>Creator:</strong> <%= @item.creator.name %> on <%= @item.created_at.strftime("%A, %B %d, %Y at %l:%M %P") %></p>
+  <% else %>
+    <p><strong>Status:</strong> <strong><%= @item.status.upcase %></strong></p>
+    <p><strong>Owner:</strong> <%= @item.owner.nil? ? "none" : @item.owner.name %></p>
+  <% end %>
+  <p><strong>Group:</strong> <%= @item.group.nil? ? "none" : @item.group.name %></p>
+  <% if @item.type == 'Task' %>
+  <% end %>
+  <p><strong>Parent Task:</strong> <%= @item.parent.nil? ? "none" : (link_to @item.parent.title, @item.parent) %></p>
+  <p><strong>SubTasks:</strong> <%= "none" if @item.children.empty? %></p>
+    <p>
+      <% @item.children.each do |child| %>
+        <li><%= link_to child.title, child %>  </li>
+      <% end %>
+    </p>
+  <p><strong>Description:</strong> <%= @item.description %></p>
+  <p><strong>Notes:</strong> </p> <p><%= simple_format(@item.notes) %></p>
+  <p><strong>Creator:</strong> <%= @item.creator.name %> on <%= @item.created_at.strftime("%A, %B %d, %Y at %l:%M %P") %></p>
 
-<p><%= link_to "Delete #{@item.type}", send("#{@item.type.downcase}_path"), method: 'delete' %></p>
-<p><%= link_to "Edit", send("edit_#{@item.type.downcase}_path") %></p>
-<p><%= link_to "See All #{@item.type.pluralize}", send("#{@item.type.downcase.pluralize}_path") %></p>
-
+  <p><%= link_to "Delete #{@item.type}", send("#{@item.type.downcase}_path"), method: 'delete' %></p>
+  <p><%= link_to "Edit", send("edit_#{@item.type.downcase}_path") %></p>
+  <p><%= link_to "See All #{@item.type.pluralize}", send("#{@item.type.downcase.pluralize}_path") %></p>
+</div>
 <!-- #  id          :integer          not null, primary key
 #  type        :string
 #  creator_id  :integer

@@ -1,9 +1,7 @@
 class TasksController < ApplicationController
-  before_action :load_available_items
-  before_action :authorize!
+  before_action :load_available_items, :authorize!, :set_type
 
   def index
-    @type = 'Task'
     @created = Task.created(current_user).select { |t| t.owner_id != current_user.id }
     @owned = Task.owned(current_user)
     @unassigned = Task.unassigned
@@ -30,7 +28,6 @@ class TasksController < ApplicationController
     @groups = Group.all
     @users = User.all
     @available_items = @available_items.reject {|item| @item.id == item.id}
-    @type = "Task"
   end
 
   def update
@@ -56,6 +53,11 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:creator_id, :group_id, :owner_id, :parent_id, :title, :description, :status, :notes, :starts_at, :ends_at)
   end
+
+  def set_type
+    @type = "Task"
+  end
+
   #  type        :string
   #  creator_id  :integer
   #  group_id    :integer

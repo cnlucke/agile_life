@@ -1,0 +1,56 @@
+<div class="container">
+  <h3>Upcoming Events <a href="<%= new_event_path %>" class="btn btn-primary btn-sm">New Event</a></h3>
+  <br>
+  <div class="agenda table-responsive">
+      <table class="table table-condensed table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Event</th>
+          </tr>
+        </thead>
+          <tbody>
+            <% date = [] %>
+            <% sorted_events.each do |event| %>
+              <% if event.starts_at.strftime("%d") != date && event.starts_at > Time.now %>
+                <tr>
+                  <td class="agenda-date" class="active" rowspan="<%= sorted_events.count {|e| e.starts_at.strftime("%d") == event.starts_at.strftime("%d")} %>">
+                    <div class="dayofmonth"><%= event.starts_at.strftime("%d") %></div>
+                    <div class="dayofweek"><%= event.starts_at.strftime("%A") %></div>
+                    <div class="shortdate text-muted"><%= event.starts_at.strftime("%B, %Y") %></div>
+                  </td>
+                  <td class="agenda-time">
+                    <% if event.starts_at.strftime("%I:%M") == event.ends_at.strftime("%I:%M") %>
+                      All Day
+                    <% else %>
+                      <%= event.starts_at.strftime("%I:%M %p") %> - <%= event.ends_at.strftime("%I:%M %p") %>
+                    <% end %>
+                  </td>
+                  <td class="agenda-events">
+                    <div class="agenda-event">
+                      <%= link_to event.title, event %>
+                    </div>
+                  </td>
+                  <% date = event.starts_at.strftime("%d") %>
+                  <% elsif event.starts_at > Time.now %>
+                  <td class="agenda-time">
+                    <% if event.starts_at.strftime("%I:%M") == event.ends_at.strftime("%I:%M") %>
+                      All Day
+                    <% else %>
+                      <%= event.starts_at.strftime("%I:%M %p") %> - <%= event.ends_at.strftime("%I:%M %p") %>
+                    <% end %>
+                  </td>
+                  <td class="agenda-events">
+                    <div class="agenda-event">
+                      <%= link_to event.title, event %>
+                    </div>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+      <a href="<%= send("new_event_path") %>" class="btn btn-primary btn-sm">New Event</a>
+  </div>
+</div>

@@ -1,81 +1,22 @@
-<% if flash[:notice] %>
-  <div class="alert alert-warning" role="alert"><strong style="color: red;"><%= flash[:notice] %></strong></div>
-<% end %>
-<br>
-<h3>Your <%= @type.pluralize %></h3>
-<% if @type == 'Task' %>
-  <table class="table table-responsive table-hover table-bordered">
-    <thead class="thead-light">
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Status</th>
-    </tr
-  </thead>
-  <tbody>
-      <% @owned.each do |t| %>
-    <tr class="<%= t.table_color(t.status) %>">
-      <td><%= link_to t.title, t %></td>
-      <td><%= t.description %></td>
-      <td class="success"><%= t.status %> </td>
-    </tr>
-    <% end %>
-  </tbody>
-  </table>
+<div class="container">
+  <% if flash[:notice] %>
+    <div class="alert alert-warning" role="alert"><strong style="color: red;"><%= flash[:notice] %></strong></div>
+  <% end %>
   <br>
 
-  <h3>Unassigned <%= @type.pluralize %></h3>
-  <table class="table table-responsive table-hover table-bordered">
-    <thead class="thead-light">
-        <tr>
-      <th>Title</th>
-      <th>Description</th>
-    </tr
-  </thead>
-  <tbody>
-      <% @unassigned.each do |t| %>
-    <tr class="<%= t.table_color(t.status) %>">
-      <td><%= link_to t.title, t %></td>
-      <td><%= t.description %></td>
-    </tr>
-    <% end %>
-  </tbody>
-  </table>
-  <h3><%= @type.pluralize %> You Created:</h3>
-<% end %>
-<table class="table table-responsive table-hover table-bordered">
-  <thead class="thead-light">
-      <tr>
-    <th>Title</th>
-    <% if @type == "Task" %>
-      <th>Description</th>
-      <th>Assigned To</th>
-      <th>Status</th>
-    <% else %>
-      <th>Start</th>
-      <th>End</th>
-    <% end %>
-  </tr
-</thead>
-<tbody>
-    <% @created.each do |t| %>
-  <tr class="<%= t.table_color(t.status) if @type == 'Task' %>">
-    <td><%= link_to t.title, t %></td>
-    <% if @type == "Task" %>
-      <td><%= t.description %></td>
-      <td><%= t.owner.name %></td>
-      <td><%= t.status %></td>
-    <% else %>
-      <% if t.all_day? %>
-      <td><%= t.starts_at.strftime("%A, %B %d, %Y") %></td>
-      <% else %>
-        <td>Starts At: <%= t.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></td>
-        <td>Ends At: <%= t.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></td>
-      <% end %>
-    <% end %>
-  </tr>
-  <% end %>
-</tbody>
-</table>
+  <% if @type == 'Task' %>
+    <h3>Your <%= @type.pluralize %>  <a href="<%= new_task_path %>" class="btn btn-primary btn-sm">New Task</a></h3>
+    <br>
+    <%= render partial: 'table', locals: {collection: current_user.owned_tasks} %>
 
-<%= link_to "Create New #{@type}", send("new_#{@type.downcase}_path") %>
+    <h3>Unassigned <%= @type.pluralize %></h3>
+    <%= render partial: 'table', locals: {collection: @unassigned} %>
+
+    <h3>Tasks You Created:</h3>
+    <%= render partial: 'table', locals: {collection: @created} %>
+    <a href="<%= send("new_#{@type.downcase}_path") %>" class="btn btn-primary btn-sm">New <%= @type %></a>
+
+  <% else %>
+    <%= render partial: 'events/table', locals: {sorted_events: @sorted_events} %>
+  <% end %>
+</div>

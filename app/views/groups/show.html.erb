@@ -1,48 +1,50 @@
-<% if flash[:notice] %>
-  <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
-<% end %>
-<br>
-<h1><%= @group.name %></h1>
-
-<h3>Group Members</h3>
-<ul>
-  <% @group.members.each do |member| %>
-    <li><%= member.name %></li>
+<div class="container">
+  <% if flash[:notice] %>
+    <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
   <% end %>
-</ul>
+  <br>
+  <h1><%= @group.name %></h1>
 
-<h3>Tasks</h3>
+  <h3>Group Members</h3>
+  <ul>
+    <% @group.members.each do |member| %>
+      <li><%= member.name %></li>
+    <% end %>
+  </ul>
 
-<ul>
-  <% @group.tasks.each do |task| %>
-    <li><%= link_to task.title, task %></li>
-  <% end %>
-</ul>
+  <h3>Tasks</h3>
+
+  <ul>
+    <% @group.tasks.each do |task| %>
+      <li><%= link_to task.title, task %></li>
+    <% end %>
+  </ul>
 
 
-<h3>Events</h3>
+  <h3>Events</h3>
 
-<ul>
-  <% @group.events.each do |event| %>
-    <li><%= link_to event.title, event %></li>
-  <% end %>
-</ul>
+  <ul>
+    <% @group.events.each do |event| %>
+      <li><%= link_to event.title, event %></li>
+    <% end %>
+  </ul>
 
-<% if @group.has_member?(current_user) %>
-  <form action="<%= group_path(@group) %>" method="post">
-    <input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <input type="hidden" name="group_action" value="leave">
-    <input type="submit" value="Leave Group">
-  </form>
-<% else %>
-  <form action="<%= group_path(@group) %>" method="post">
-    <input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <input type="hidden" name="group_action" value="join">
-    <input type="submit" value="Join Group">
-  </form>
-<% end %><br>
+  <% if @group.has_member?(current_user) %>
+    <form action="<%= group_path(@group) %>" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="group_action" value="leave">
+      <input type="submit" value="Leave Group">
+    </form>
+  <% else %>
+    <form action="<%= group_path(@group) %>" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="group_action" value="join">
+      <input type="submit" value="Join Group">
+    </form>
+  <% end %><br>
 
-<%= link_to 'Edit Group', edit_group_path %><br>
-<%= link_to 'Delete Group', @group, method: 'delete' %>
+  <%= link_to 'Edit Group', edit_group_path %><br>
+  <%= link_to 'Delete Group', @group, method: 'delete' %>
+</div>
