@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
-  before_action :authorize!
+  before_action :authorize!, except: :index
+
+  def index
+
+  end
 
   def user_signed_in?
     !!current_user

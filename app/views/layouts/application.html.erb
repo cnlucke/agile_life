@@ -16,7 +16,7 @@
 
 <div class="container-fluid">
   <div class="topnav">
-    <a class="active" href="<%= user_path %>">Home</a>
+    <a class="active" href="<%= current_user ? user_path : root_path %>">Home</a>
     <a href="<%= groups_path %>">Groups</a>
     <a href="<%= tasks_path %>">Tasks</a>
     <a href="<%= events_path %>">Events</a>
@@ -24,7 +24,7 @@
       <a class="right-navbar" href="/session/new">Log In</a>
       <a class="right-navbar" href="/user/new">Create Account</a>
     <% else %>
-      <a class="right-navbar" href="#">Logout</a>
+      <%= link_to "Logout", session_path, :method => "delete", class: "right-navbar" %>
       <a class="right-navbar" href="<%= edit_user_path %>">Edit User Profile</a>
     <% end %>
   </div>

@@ -1,12 +1,10 @@
 <h1>Active Groups</h1>
-<br>
-<br>
 
 <ul>
   <% @groups.each do |group| %>
     <li><%= link_to group.name, group %>
     <% if group.has_member?(current_user) %>
-      <b>Member</b><form action="<%= group_path(group) %>" method="post">
+      <b><i>Member</i></b><form action="<%= group_path(group) %>" method="post" style="display:inline;">
         <input type="hidden" name="_method" value="PATCH">
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
         <input type="hidden" name="group_action" value="leave">
@@ -14,7 +12,7 @@
       </form></li><br>
 
     <% else %>
-    <form action="<%= group_path(group) %>" method="post">
+    <form action="<%= group_path(group) %>" method="post" style="display:inline;">
       <input type="hidden" name="_method" value="PATCH">
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <input type="hidden" name="group_action" value="join">
