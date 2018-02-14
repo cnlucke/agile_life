@@ -1,5 +1,6 @@
 <h1><%= current_user.name %></h1>
-<h2>Current Groups</h2>
+<br>
+<h3>Current Groups</h3>
 <ul>
   <% if current_user.groups.count == 0 %>
     <li>none</li>
@@ -11,10 +12,21 @@
 </ul>
 <p><%= link_to "See All Groups", groups_path %></p>
 
-<h2><%= link_to "My Tasks", tasks_path %></h2>
-<h2><%= link_to "My Events", events_path %></h2>
+<h3><%= link_to "My Tasks", tasks_path %></h3>
 
+<ul>
+  <% current_user.created_tasks.each do |task| %>
+    <li><%= link_to task.title, task_path(task) %></li>
+  <% end %>
+</ul>
 
-<p><%= link_to "Edit", edit_user_path %></p>
+<h3><%= link_to "My Events", events_path %></h3>
+
+<ul>
+  <% current_user.created_events.each do |event| %>
+    <li><%= link_to event.title, event_path(event) %></li>
+  <% end %>
+</ul>
+
 
 <%= button_to "Logout", session_path, :method => "delete" %>

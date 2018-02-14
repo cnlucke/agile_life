@@ -21,6 +21,9 @@
     <% if !current_user %>
       <a class="right-navbar" href="/session/new">Log In</a>
       <a class="right-navbar" href="/user/new">Create Account</a>
+    <% else %>
+      <a class="right-navbar" href="#">Logout</a>
+      <a class="right-navbar" href="<%= edit_user_path %>">Edit User Profile</a>
     <% end %>
   </div>
 

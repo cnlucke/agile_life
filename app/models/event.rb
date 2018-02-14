@@ -26,7 +26,12 @@ class Event < Item
   has_many :children, foreign_key: :parent_id, class_name: 'Item'
 
   def all_day?
-    time = [starts_at.hour, starts_at.min, starts_at.sec, ends_at.hour, ends_at.min, ends_at.sec]
-    (time.uniq.length == 1) && (time[0] == 0)
+    if starts_at.nil? && ends_at.nil?
+      false
+    else
+      time = [starts_at.hour, starts_at.min, starts_at.sec, ends_at.hour, ends_at.min, ends_at.sec]
+      (time.uniq.length == 1) && (time[0] == 0)
+    end
   end
+
 end

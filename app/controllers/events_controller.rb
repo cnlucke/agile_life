@@ -22,7 +22,6 @@ class EventsController < ApplicationController
       redirect_to event_path(@event)
     else
       @event = Event.create(event_params)
-      all_day_start_date = @event.start_date
       redirect_to event_path(@event)
     end
   end
@@ -35,7 +34,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    binding.pry
     @event = Event.find_by(id: params[:id])
     if params["check_box"].nil?
       @event.update(event_params)

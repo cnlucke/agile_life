@@ -4,8 +4,10 @@
   <%= f.label :name %>
   <%= f.text_field :name %><br>
   <%= f.label :password %>
-  <%= f.password_field :password %><br>
+  <%= f.password_field :password %><br><br>
   <%= f.submit %>
   <br>
-  <%= button_to "Delete Account", user_path, :method => "delete" %>
 <% end %>
+
+<br>
+<%= button_to "Delete Account", user_path, :method => "delete" %>
