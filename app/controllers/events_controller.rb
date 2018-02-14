@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_action :load_available_items
   def index
     @type = 'Event'
     @created = Item.created(current_user).select { |i| i.type == @type  }
@@ -6,54 +7,72 @@ class EventsController < ApplicationController
   end
 
   def show
-    @item = Event.find_by(id: params[:id])
+    @item = Event.find(params[:id])
   end
 
   def new
-    @item = Event.new(creator_id: current_user.id)
-    @items = Event.all
+    @item = Event.new
     @groups = Group.all
     @users = User.all
   end
 
   def create
-    if params["event"]["check_box"] == 0
-      @event = Event.create(event_params)
-      redirect_to event_path(@event)
+    if params["check_box"]
+      @item = Event.create!(event_params)
+      @item.set_all_day
+      flash[:notice] = "Event successfully created."
+      redirect_to event_path(@item)
     else
+<<<<<<< HEAD
       @event = Event.create(event_params)
       redirect_to event_path(@event)
+=======
+      @item = Event.create!(event_params)
+      flash[:notice] = "Event successfully created."
+      redirect_to event_path(@item)
+>>>>>>> b9f7228232160c79c0afd3a13110b67908b1f931
     end
   end
 
   def edit
-    @item = Event.find_by(id: params[:id])
-    @items = Event.all
+    @item = Event.find(params[:id])
     @groups = Group.all
     @users = User.all
+    @available_items = @available_items.reject {|item| @item.id == item.id}
   end
 
   def update
+<<<<<<< HEAD
     @event = Event.find_by(id: params[:id])
+=======
+    @item = Event.find(params[:id])
+    @available_items = @available_items.reject {|item| @item.id == item.id}
+
+>>>>>>> b9f7228232160c79c0afd3a13110b67908b1f931
     if params["check_box"].nil?
-      @event.update(event_params)
+      @item.update!(event_params)
+      flash[:notice] = "Event successfully updated."
       redirect_to event_path
     else
-      @event.update(event_params)
-      @event.starts_at = @event.starts_at.change({ hour: 0, min: 0, sec: 0 })
-      @event.ends_at = @event.ends_at.change({ hour: 0, min: 0, sec: 0 })
-      @event.save
-      redirect_to event_path(@event)
+      @item.update!(event_params)
+      @item.set_all_day
+      flash[:notice] = "Event successfully updated."
+      redirect_to event_path(@item)
     end
   end
 
   def destroy
-    @event = Event.find_by(id: params[:id])
+    @event = Event.find(params[:id])
     @event.destroy
+    flash[:notice] = "Event successfully deleted."
     redirect_to events_path
   end
 
   private
+  def load_available_items
+    @available_items = Event.all
+  end
+
   def event_params
     params.require(:event).permit(:creator_id, :group_id, :owner_id, :parent_id, :title, :description, :status, :notes, :starts_at, :ends_at)
   end

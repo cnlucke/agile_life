@@ -5,7 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <%= stylesheet_link_tag "application.css" %>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
 <body>
@@ -15,6 +17,7 @@
 <div class="container-fluid">
   <div class="topnav">
     <a class="active" href="<%= user_path %>">Home</a>
+<<<<<<< HEAD
     <a href="<%= groups_path %>">Groups</a>
     <a href="<%= tasks_path %>">Tasks</a>
     <a href="<%= events_path %>">Events</a>
@@ -25,6 +28,11 @@
       <a class="right-navbar" href="#">Logout</a>
       <a class="right-navbar" href="<%= edit_user_path %>">Edit User Profile</a>
     <% end %>
+=======
+    <a href=<%=groups_path%>>Groups</a>
+    <a href=<%=tasks_path%>>Tasks</a>
+    <a href=<%=events_path%>>Events</a>
+>>>>>>> b9f7228232160c79c0afd3a13110b67908b1f931
   </div>
 
   <%= yield %>
