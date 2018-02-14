@@ -50,15 +50,15 @@ Task.find_or_create_by(title: "Order white bookshelf for kids' room", group_id: 
 Task.find_or_create_by(title: "Order groceries", group_id: 1, creator_id: 2, description: "Put in FreshDirect order on Saturday", notes: "See Cristy's account for current cart", status: "in progress")
 
 ### Tasks in "blocked" status
-Task.find_or_create_by(title: "Paint Wall", group_id: 1, creator_id: 2, description: "paint living room wall wall", notes: "Currently blocked while waiting for landlord approval", status: "blocked")
+Task.find_or_create_by(title: "Paint Wall", group_id: 1, creator_id: 2, description: "paint living room wall", notes: "Currently blocked while waiting for landlord approval", status: "blocked")
 Task.find_or_create_by(title: "Get matching paint", group_id: 1, creator_id: 2, description: "Get matching paint for wall", notes: "Get paint sample and put in envelope", status: "blocked", parent_id: 7)
 Task.find_or_create_by(title: "Go to Home Depot", group_id: 1, creator_id: 2, description: "match paint and painting supplies", notes: "Get paint matched and basic painting supplies", status: "blocked", parent_id: 7)
 Task.find_or_create_by(title: "Schedule EEG Appt", group_id: 1, creator_id: 2, description: "Lennox Hill Neurology EEG appointment", notes: "Call 1-866-2400./r/nProblem is I need a weekend appintment and they don't have them yet./r/nSupposedly weekend appointments are coming soon.", status: "blocked")
 
 ### Tasks in "completed" status
-Task.find_or_create_by(title: "Get Laundry Ready", group_id: 1, creator_id: 2, description: "get laundry ready for pickup", notes: "Gather dirty clothes and drag laundry bags out by door", parent_id: 1, status: "completed")
-Task.find_or_create_by(title: "Logan Field Trip Form", group_id: 1, creator_id: 2, description: "complete Logan's field trip form", notes: "Due Friday. Put in backpack.", parent_id: 1, status: "completed")
-Task.find_or_create_by(title: "Class Valentines", group_id: 1, creator_id: 2, description: "Buy Valentines for kid classes", notes: "Logan's class: need 28 Valentines/r/nJoshua's class: need 18 Valentines/r/n2 teachers per class", parent_id: 1, status: "completed")
+Task.find_or_create_by(title: "Get Laundry Ready", group_id: 1, creator_id: 2, description: "get laundry ready for pickup", notes: "Gather dirty clothes and drag laundry bags out by door", status: "completed")
+Task.find_or_create_by(title: "Logan Field Trip Form", group_id: 1, creator_id: 2, description: "complete Logan's field trip form", notes: "Due Friday. Put in backpack.", status: "completed")
+Task.find_or_create_by(title: "Class Valentines", group_id: 1, creator_id: 2, description: "Buy Valentines for kid classes", notes: "Logan's class: need 28 Valentines/r/nJoshua's class: need 18 Valentines/r/n2 teachers per class", status: "completed")
 Task.find_or_create_by(title: "Put Garbage Out", group_id: 1, creator_id: 3, description: "Empty garbage and recycling", notes: "Make sure to put new bags in all cans", status: "completed")
 
 ##Flatiron Tasks

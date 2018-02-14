@@ -1,11 +1,10 @@
 <h1>Sign Up</h1>
 <% if flash[:notice] %>
-  <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
+  <div class="alert alert-warning"><strong style="color: red;"><%= flash[:notice] %></strong></div>
   <% if flash[:notice] == "User already exists." %>
     <p>Would you like to <%= link_to "login", new_session_path %>?</p>
   <% end %>
 <% end %><br>
-
 
 <%= form_for @user, url: user_path do |f| %>
   <%= f.label :name %>

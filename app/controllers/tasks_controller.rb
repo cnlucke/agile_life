@@ -4,8 +4,9 @@ class TasksController < ApplicationController
 
   def index
     @type = 'Task'
-    @created = Item.created(current_user).select { |i| i.type == @type  }
-    @owned = Item.owned(current_user).select { |i| i.type == @type  }
+    @created = Task.created(current_user).select { |t| t.owner_id != current_user.id }
+    @owned = Task.owned(current_user)
+    @unassigned = Task.unassigned
   end
 
   def show
@@ -29,6 +30,7 @@ class TasksController < ApplicationController
     @groups = Group.all
     @users = User.all
     @available_items = @available_items.reject {|item| @item.id == item.id}
+    @type = "Task"
   end
 
   def update

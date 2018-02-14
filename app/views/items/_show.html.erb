@@ -1,39 +1,33 @@
 <h1><%= @item.title %></h1>
-<br>
 <% if flash[:notice] %>
-  <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
+  <div class="alert alert-success" role="alert"><strong><%= flash[:notice] %></strong></div>
 <% end %>
 <% if @item.type == 'Event' %>
   <% if @item.all_day? %>
-  <h3>Date: <%= @item.starts_at.strftime("%A, %B %d, %Y") %></h3>
+  <p>Date: <%= @item.starts_at.strftime("%A, %B %d, %Y") %></p>
   <% else %>
   <h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
   <h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
   <% end %>
+<% else %>
+  <p><strong>Status:</strong> <strong><%= @item.status.upcase %></strong></p>
+  <p><strong>Owner:</strong> <%= @item.owner.nil? ? "none" : @item.owner.name %></p>
 <% end %>
-<br>
+<p><strong>Group:</strong> <%= @item.group.nil? ? "none" : @item.group.name %></p>
 <% if @item.type == 'Task' %>
-  <h3>Status: <strong><%= @item.status.upcase %></strong></h3>
 <% end %>
-<br>
-<h3>Creator: <%= @item.creator.name %></h3>
-<h3>Group: <%= @item.group.nil? ? "none" : @item.group.name %></h3>
-<% if @item.type == 'Task' %>
-<h3>Owner: <%= @item.owner.nil? ? "none" : @item.owner.name %></h3>
-<% end %>
-<h3>Parent: <%= @item.parent.nil? ? "none" : (link_to @item.parent.title, @item.parent) %></h3>
-<h3>SubTasks:</h3>
-  <div>
+<p><strong>Parent Task:</strong> <%= @item.parent.nil? ? "none" : (link_to @item.parent.title, @item.parent) %></p>
+<p><strong>SubTasks:</strong> <%= "none" if @item.children.empty? %></p>
+  <p>
     <% @item.children.each do |child| %>
       <li><%= link_to child.title, child %>  </li>
     <% end %>
-  </div>
-<h3>Description:</h3> <p><%= @item.description %></p>
-<h3>Notes: </h3> <p><%= simple_format(@item.notes) %></p>
-<p><strong>Created:</strong> <%= @item.created_at.strftime("%A, %B %d, %Y at %l:%M %P") %></p>
+  </p>
+<p><strong>Description:</strong> <%= @item.description %></p>
+<p><strong>Notes:</strong> </p> <p><%= simple_format(@item.notes) %></p>
+<p><strong>Creator:</strong> <%= @item.creator.name %> on <%= @item.created_at.strftime("%A, %B %d, %Y at %l:%M %P") %></p>
 
-<%= link_to "Delete #{@item.type}", send("#{@item.type.downcase}_path"), method: 'delete' %>
-<br>
+<p><%= link_to "Delete #{@item.type}", send("#{@item.type.downcase}_path"), method: 'delete' %></p>
 <p><%= link_to "Edit", send("edit_#{@item.type.downcase}_path") %></p>
 <p><%= link_to "See All #{@item.type.pluralize}", send("#{@item.type.downcase.pluralize}_path") %></p>
 

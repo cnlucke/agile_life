@@ -23,14 +23,14 @@ class Item < ApplicationRecord
   scope :events, -> { where(type: 'Event') }
 
   def self.created(user)
-    Item.all.select { |i| i.creator_id == user.id }
+    self.all.select { |i| i.creator_id == user.id }
   end
 
   def self.owned(user)
-    Item.all.select { |i| i.owner_id == user.id }
+    self.all.select { |i| i.owner_id == user.id }
   end
 
   def children(item)
-    Item.all.select { |i| i.parent_id == item.id && i.id != item.id }
+    self.all.select { |i| i.parent_id == item.id && i.id != item.id }
   end
 end
