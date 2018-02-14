@@ -31,6 +31,7 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @type
     @item = Event.find(params[:id])
     @groups = Group.all
     @users = User.all
