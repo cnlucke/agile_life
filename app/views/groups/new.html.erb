@@ -1,3 +1,4 @@
+<br>
 <h1>Create a New Group</h1>
 
 <% if flash[:notice] %>
@@ -5,9 +6,9 @@
 <% end %>
 
 <%= form_for @group do |f| %>
-  <%= f.label 'Group Name' %>
-  <%= f.text_field :name %><br>
-  <%= f.label 'Members' %><br>
-  <%= f.collection_check_boxes :member_ids, User.all, :id, :name %><br>
+  <%= f.label 'Group Name:' %><br>
+  <%= f.text_field :name %><br><br>
+  <%= f.label 'Members:' %><br>
+  <%= f.collection_check_boxes :member_ids, User.all, :id, :name %><br><br>
   <%= f.submit %>
 <% end %>
