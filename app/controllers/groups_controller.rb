@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   before_action :group_member?, only: [:edit, :destroy]
+  before_action :authorize!
 
   def new
     @group = Group.new

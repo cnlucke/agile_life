@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
   before_action :load_available_items
+  before_action :authorize!
+
   def index
     @type = 'Event'
     @created = Event.created(current_user)

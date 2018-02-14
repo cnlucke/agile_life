@@ -1,24 +1,33 @@
-<h1>Active Groups</h1>
-
+<br>
+<h1>My Groups</h1>
 <ul>
-  <% @groups.each do |group| %>
-    <li><%= link_to group.name, group %>
-    <% if group.has_member?(current_user) %>
-      <b><i>Member</i></b><form action="<%= group_path(group) %>" method="post" style="display:inline;">
+  <% current_user.groups.each do |group| %>
+    <li><%= link_to group.name, group %> <b><i>Member</i></b>
+      <form action="<%= group_path(group) %>" method="post" style="display:inline;">
         <input type="hidden" name="_method" value="PATCH">
         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
         <input type="hidden" name="group_action" value="leave">
-        <input type="submit" value="Leave Group">
+        <input type="submit" class="btn-default btn-sm" value="Leave Group">
       </form></li><br>
-
-    <% else %>
-    <form action="<%= group_path(group) %>" method="post" style="display:inline;">
-      <input type="hidden" name="_method" value="PATCH">
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <input type="hidden" name="group_action" value="join">
-      <input type="submit" value="Join Group">
-    </form></li><br>
-    <% end %>
+  <% end %>
+  <% if current_user.groups.length == 0%>
+    <li>none</li>
   <% end %>
 </ul>
-<%= link_to "Back", user_path %>
+
+<h1>Groups Available to Join</h1>
+<ul>
+  <% @groups.each do |group| %>
+    <% if !group.has_member?(current_user) %>
+      <li><%= link_to group.name, group %>
+        <form action="<%= group_path(group) %>" method="post" style="display:inline;">
+          <input type="hidden" name="_method" value="PATCH">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <input type="hidden" name="group_action" value="join">
+          <input type="submit" class="btn-default btn-sm" value="Join Group">
+        </form>
+      </li><br>
+    <% end %>
+  <% end %>
+  <li><a href="<%= new_group_path %>" class="btn-primary btn">Create New Group</a></li>
+</ul>
