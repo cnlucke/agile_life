@@ -23,14 +23,9 @@ class EventsController < ApplicationController
       flash[:notice] = "Event successfully created."
       redirect_to event_path(@item)
     else
-<<<<<<< HEAD
-      @event = Event.create(event_params)
-      redirect_to event_path(@event)
-=======
       @item = Event.create!(event_params)
       flash[:notice] = "Event successfully created."
       redirect_to event_path(@item)
->>>>>>> b9f7228232160c79c0afd3a13110b67908b1f931
     end
   end
 
@@ -42,13 +37,9 @@ class EventsController < ApplicationController
   end
 
   def update
-<<<<<<< HEAD
-    @event = Event.find_by(id: params[:id])
-=======
     @item = Event.find(params[:id])
     @available_items = @available_items.reject {|item| @item.id == item.id}
 
->>>>>>> b9f7228232160c79c0afd3a13110b67908b1f931
     if params["check_box"].nil?
       @item.update!(event_params)
       flash[:notice] = "Event successfully updated."
