@@ -34,6 +34,7 @@ class EventsController < ApplicationController
 
   def edit
     @item = Event.find(params[:id])
+    @type = @item.type
     @groups = Group.all
     @users = User.all
     @available_items = @available_items.reject {|item| @item.id == item.id}

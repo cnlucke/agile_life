@@ -15,6 +15,7 @@ class TasksController < ApplicationController
 
   def new
     @item = Task.new
+    @type = @item.type
     @groups = Group.all
     @users = User.all
   end

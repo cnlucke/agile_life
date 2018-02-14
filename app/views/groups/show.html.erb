@@ -1,48 +1,67 @@
 <% if flash[:notice] %>
-  <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
+  <div class="alert alert-warning" role="alert"><strong style="color: red;"><%= flash[:notice] %></strong></div>
 <% end %>
 <br>
 <h1><%= @group.name %></h1>
+<div class="btn-group">
+  <% if @group.has_member?(current_user) %>
+    <form action="<%= group_path(@group) %>" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="group_action" value="leave">
+      <input type="submit" value="Leave Group" class="btn-info btn-sm">
+    </form>
+  <% else %>
+    <form action="<%= group_path(@group) %>" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="group_action" value="join">
+      <input type="submit" value="Join Group" class="btn-info btn-sm">
+    </form>
+  <% end %><br>
 
-<h3>Group Members</h3>
+  <a href="<%= edit_group_path %>" class="btn-success btn-sm">Edit Group</a>
+  <form action="<%= @groups %>" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="submit" value="Delete Group" class="btn-danger btn-sm">
+  </form>
+</div>
+
+<br>
+<br>
+
+<h2>Group Members</h2>
 <ul>
   <% @group.members.each do |member| %>
     <li><%= member.name %></li>
   <% end %>
 </ul>
 
-<h3>Tasks</h3>
+<br>
+
+<h2>Tasks</h2>
 
 <ul>
   <% @group.tasks.each do |task| %>
     <li><%= link_to task.title, task %></li>
   <% end %>
+  <% if @group.tasks.length == 0 %>
+    <li>NONE</li><br>
+    <a href="<%= new_task_path %>" class="btn-primary btn-sm">Create New Task</a>
+  <% end %>
 </ul>
 
+<br>
 
-<h3>Events</h3>
+<h2>Events</h2>
 
 <ul>
   <% @group.events.each do |event| %>
     <li><%= link_to event.title, event %></li>
   <% end %>
+  <% if @group.events.length == 0 %>
+    <li>NONE</li><br>
+    <a href="<%= new_event_path %>" class="btn-primary btn-sm">Create New Event</a>
+  <% end %>
 </ul>
-
-<% if @group.has_member?(current_user) %>
-  <form action="<%= group_path(@group) %>" method="post">
-    <input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <input type="hidden" name="group_action" value="leave">
-    <input type="submit" value="Leave Group">
-  </form>
-<% else %>
-  <form action="<%= group_path(@group) %>" method="post">
-    <input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <input type="hidden" name="group_action" value="join">
-    <input type="submit" value="Join Group">
-  </form>
-<% end %><br>
-
-<%= link_to 'Edit Group', edit_group_path %><br>
-<%= link_to 'Delete Group', @group, method: 'delete' %>
