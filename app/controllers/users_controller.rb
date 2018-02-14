@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
+    @sorted_events = sorted_events
   end
 
   def edit
@@ -40,6 +41,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:id, :name, :password)
+  end
+
+  def sorted_events
+    current_user.created_events.sort{|x,y| x.starts_at <=> y.starts_at}
   end
 
 end
