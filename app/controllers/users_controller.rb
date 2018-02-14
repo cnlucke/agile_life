@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def show
     @user = current_user
     @sorted_events = sorted_events
+    @in_progress = Task.in_progress.select { |t| t.owner_id == current_user.id }
   end
 
   def edit
@@ -55,7 +56,7 @@ class UsersController < ApplicationController
   def unassigned
     User.find_by(name: "unassigned")
   end
-  
+
   def sorted_events
     current_user.created_events.sort{|x,y| x.starts_at <=> y.starts_at}
   end
