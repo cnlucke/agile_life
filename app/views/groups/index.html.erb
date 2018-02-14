@@ -32,7 +32,7 @@
       </li><br>
     <% end %>
   <% end %>
-  <% if current_user.groups == @groups %>
+  <% if current_user.groups.length == @groups.length %>
     <li>NONE</li><br>
   <% end %>
   <a href="<%= new_group_path %>" class="btn-primary btn">Create New Group</a>
