@@ -1,14 +1,16 @@
-<br>
-<h1>Create a New Group</h1>
+<div class="container">
+  <br>
+  <h1>Create a New Group</h1>
 
-<% if flash[:notice] %>
-  <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
-<% end %>
+  <% if flash[:notice] %>
+    <div class="notice"><strong style="color: red;"><%= flash[:notice] %></strong></div>
+  <% end %>
 
-<%= form_for @group do |f| %>
-  <%= f.label 'Group Name:' %><br>
-  <%= f.text_field :name %><br><br>
-  <%= f.label 'Members:' %><br>
-  <%= f.collection_check_boxes :member_ids, User.all[1...User.all.length], :id, :name, class: "form-check-inline" %><br><br>
-  <%= f.submit 'Create Group', class: "btn btn-primary"%>
-<% end %>
+  <%= form_for @group do |f| %>
+    <%= f.label 'Group Name:' %><br>
+    <%= f.text_field :name %><br><br>
+    <%= f.label 'Members:' %><br>
+    <%= f.collection_check_boxes :member_ids, User.all[1...User.all.length], :id, :name, class: "form-check-inline" %><br><br>
+    <%= f.submit 'Create Group', class: "btn btn-primary"%>
+  <% end %>
+</div>

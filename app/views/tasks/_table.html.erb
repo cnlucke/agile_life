@@ -1,0 +1,32 @@
+<table class="table table-responsive table-hover table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th>Title</th>
+      <th>Created By</th>
+      <th>Assigned To</th>
+      <th>Associated Group</th>
+      <th>Created On</th>
+      <th>Current Status</th>
+    </tr
+  </thead>
+  <tbody>
+    <% collection.each do |task| %>
+      <tr>
+        <td><%= link_to task.title, task_path(task) %></td>
+        <% if task.creator == current_user  %>
+          <td>You</td>
+        <% else %>
+          <td><%= task.creator.name %></td>
+        <% end %>
+        <% if task.owner == current_user %>
+          <td>You</td>
+        <% else %>
+          <td><%= task.owner.name %></td>
+        <% end %>
+        <td><%= task.group ? task.group.name : "none" %></td>
+        <td><%= task.created_at.strftime("%m/%d/%y") %></td>
+        <td><%= task.status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,3 +1,5 @@
-<h1>Edit <%= @item.type %></h1>
-<%= render 'items/form' %>
-<%= link_to "Delete #{@item.type}", @item, method: 'delete', data: { confirm: 'Are you sure?' } %>
+<div class="container">
+  <h1>Edit <%= @item.type %></h1>
+  <%= render 'items/form' %>
+  <%= link_to "Delete #{@item.type}", @item, method: 'delete', data: { confirm: 'Are you sure?' } %>
+</div>
