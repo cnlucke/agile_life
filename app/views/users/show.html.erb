@@ -1,32 +1,116 @@
 <h1><%= current_user.name %></h1>
 <br>
-<h3>Current Groups</h3>
-<ul>
-  <% if current_user.groups.count == 0 %>
-    <li>none</li>
-  <% else %>
-    <% current_user.groups.each do |group| %>
-      <li><%= group.name %></li>
-    <% end %>
-  <% end %>
-</ul>
-<p><%= link_to "See All Groups", groups_path %></p>
 
-<h3><%= link_to "My Tasks", tasks_path %></h3>
+<h3>My Tasks</h3>
 
-<ul>
-  <% current_user.created_tasks.each do |task| %>
-    <li><%= link_to task.title, task_path(task) %></li>
-  <% end %>
-</ul>
+<br>
 
-<h3><%= link_to "My Events", events_path %></h3>
+<% if current_user.created_tasks.count == 0 && current_user.owned_tasks.count == 0%>
+  <li>none</li>
+<% else %>
+  <table class="table table-hover">
+    <thead class="thead-default">
+      <tr>
+        <th>Title</th>
+        <th>Creator</th>
+        <th>Assigned To</th>
+        <th>Created</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.created_tasks.each do |task| %>
+        <tr>
+          <td><%= link_to task.title, task_path(task) %></td>
+          <% if task.creator == current_user && task.owner == current_user %>
+            <td>You</td>
+            <td>You</td>
+          <% else %>
+            <td>You</td>
+            <td><%= task.owner.name %></td>
+          <% end %>
+          <td><%= task.created_at.strftime("%m/%d/%y") %></td>
+          <td><%= task.status %></td>
+        </tr>
+      <% end %>
 
-<ul>
-  <% current_user.created_events.each do |event| %>
-    <li><%= link_to event.title, event_path(event) %></li>
-  <% end %>
-</ul>
+      <% current_user.owned_tasks.each do |task| %>
+        <% if !current_user.created_tasks.include?(task) %>
+          <tr>
+            <td><%= link_to task.title, task_path(task) %></td>
+            <td><%= task.creator.name %></td>
+            <% if task.owner == current_user %>
+              <td>You</td>
+            <% else %>
+              <td><%= task.owner.name %></td>
+            <% end %>
+            <td><%= task.created_at.strftime("%m/%d/%y") %></td>
+            <td><%= task.status %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 
+<br>
 
-<%= link_to "Logout", session_path, :method => "delete" %>
+<div class="container">
+
+<h3>Upcoming Events</h3>
+
+<div class="agenda">
+  <div class="table-responsive">
+    <table class="table table-condensed table-bordered">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Event</th>
+        </tr>
+      </thead>
+        <tbody>
+          <% sorted = current_user.created_events.sort{|x,y| x.starts_at <=> y.starts_at} %>
+          <% date = [] %>
+          <% sorted.each do |event| %>
+            <% if event.starts_at.strftime("%d") != date %>
+              <tr>
+                <td class="agenda-date" class="active" rowspan="<%= sorted.count {|e| e.starts_at.strftime("%d") == event.starts_at.strftime("%d")} %>">
+                  <div class="dayofmonth"><%= event.starts_at.strftime("%d") %></div>
+                  <div class="dayofweek"><%= event.starts_at.strftime("%A") %></div>
+                  <div class="shortdate text-muted"><%= event.starts_at.strftime("%B, %Y") %></div>
+                </td>
+                <td class="agenda-time">
+                  <% if event.starts_at.strftime("%I:%M") == event.ends_at.strftime("%I:%M") %>
+                    All Day
+                  <% else %>
+                    <%= event.starts_at.strftime("%I:%M %p") %> - <%= event.ends_at.strftime("%I:%M %p") %>
+                  <% end %>
+                </td>
+                <td class="agenda-events">
+                  <div class="agenda-event">
+                    <%= link_to event.title, event %>
+                  </div>
+                </td>
+                <% date = event.starts_at.strftime("%d") %>
+              <% else %>
+                <td class="agenda-time">
+                  <% if event.starts_at.strftime("%I:%M") == event.ends_at.strftime("%I:%M") %>
+                    All Day
+                  <% else %>
+                    <%= event.starts_at.strftime("%I:%M %p") %> - <%= event.ends_at.strftime("%I:%M %p") %>
+                  <% end %>
+                </td>
+                <td class="agenda-events">
+                  <div class="agenda-event">
+                    <%= link_to event.title, event %>
+                  </div>
+                </td>
+              <% end %>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

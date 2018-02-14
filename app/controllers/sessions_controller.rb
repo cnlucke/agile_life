@@ -14,11 +14,11 @@ class SessionsController < ApplicationController
       flash.now[:notice] = "Invalid User/Password Combination"
       render 'new'
     end
-
   end
 
   def destroy
     session.clear
     redirect_to new_session_path
   end
+
 end
