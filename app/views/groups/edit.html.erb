@@ -13,9 +13,12 @@
     <div class="form-group row">
       <div class="col-sm-2">Update Members:</div>
       <div class="col-sm-10">
-        <div class="form-check">
-          <%= f.collection_check_boxes :member_ids, User.all[1...User.all.length], :id, :name %>
-        </div>
+        <%= f.collection_check_boxes :member_ids, User.all[1...User.all.length], :id, :name do |cb| %>
+          <div class="form-check form-check-inline">
+            <%= cb.check_box class: "form-check-input" %>
+            <%= cb.label class: "form-check-label" %>
+          </div>
+        <% end %>
       </div>
     </div>
     <%= f.submit 'Update Group', class: "btn btn-primary"%>
