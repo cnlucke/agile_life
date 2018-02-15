@@ -21,7 +21,7 @@
     <a href="<%= tasks_path %>">Tasks</a>
     <a href="<%= events_path %>">Events</a>
     <% if !current_user %>
-      <a class="right-navbar" href="/session/new">Log In</a>
+      <a class="right-navbar" href="/session/new">Sign In</a>
       <a class="right-navbar" href="/user/new">Create Account</a>
     <% else %>
       <%= link_to "Logout", session_path, :method => "delete", class: "right-navbar" %>
@@ -32,5 +32,7 @@
   <%= yield %>
 
 </div>
+
 </body>
+
 </html>
