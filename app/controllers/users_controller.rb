@@ -25,6 +25,17 @@ class UsersController < ApplicationController
     @user = current_user
     @sorted_events = sorted_events
     @in_progress = Task.in_progress.select { |t| t.owner_id == current_user.id }
+
+    case params[:user_action]
+    when "my_tasks"
+      redirect_to user_path(table: "my_tasks")
+    when 'my_created_tasks'
+      redirect_to user_path(table: "my_created_tasks")
+    when 'my_events'
+      redirect_to user_path(table: "my_events")
+    else
+    end
+
   end
 
   def edit
