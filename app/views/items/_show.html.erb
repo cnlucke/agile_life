@@ -11,6 +11,7 @@
     <% else %>
     <h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
     <h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
+    <br>
     <% end %>
   <% else %>
     <p><strong>Status:</strong> <strong><%= @item.status.upcase %></strong></p>
