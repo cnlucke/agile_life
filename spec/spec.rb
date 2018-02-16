@@ -2,6 +2,37 @@ require 'rails_helper'
 
 describe User do
 
+  describe 'User.new' do
+    before(:each)  do
+      @user = User.new(name: "Mary", password: "red")
+    end
+
+    it "has a name" do
+      expect(@user.name).to eq("Mary")
+    end
+
+    it 'has a password' do
+      expect(@user.password_digest.nil?).to be_falsey
+    end
+
+    it 'defaults to active' do
+      expect(@user.active).to be_truthy
+    end
+
+    it 'can be updated to inactive' do
+      @user.active = false
+      expect(@user.active).to be_falsey
+    end
+
+    it 'inherits from ActiveRecord::Base' do
+      expect(User.superclass.superclass).to eq(ActiveRecord::Base)
+    end
+  end
+
+
+
+
+
   describe "User.create" do
     describe "given a name and a password" do
       it "creates a new instance" do
