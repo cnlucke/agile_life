@@ -10,67 +10,6 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ *= require bootstrap_init
  *= require_self
  */
-
-body {
- margin: 0;
- font-family: Arial, Helvetica, sans-serif;
-}
-
-.topnav {
- overflow: hidden;
- background-color: #2F75D1;
-}
-
-.topnav a {
- float: left;
- color: #f2f2f2;
- text-align: center;
- padding: 14px 16px;
- text-decoration: none;
- font-size: 17px;
-}
-
-a.right-navbar {
-  float: right;
-}
-
-.topnav a:hover {
- background-color: #235AA0;
-}
-
-.topnav a.active {
- background-color: #523F78;
- color: white;
-}
-
-.agenda {  }
-
-/* Dates */
-.agenda .agenda-date { width: 170px; }
-.agenda .agenda-date .dayofmonth {
-  width: 40px;
-  font-size: 36px;
-  line-height: 36px;
-  float: left;
-  text-align: right;
-  margin-right: 10px;
-}
-.agenda .agenda-date .shortdate {
-  font-size: 0.75em;
-}
-
-
-/* Times */
-.agenda .agenda-time { width: 140px; }
-
-
-/* Events */
-.agenda .agenda-events {  }
-.agenda .agenda-events .agenda-event {  }
-
-@media (max-width: 767px) {
-
-}

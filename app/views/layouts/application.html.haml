@@ -1,0 +1,34 @@
+!!!
+%html{lang: "en"}
+  %head
+    %meta{charset: "utf-8"}/
+    %meta{content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport"}/
+    %title AgileLife
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    %nav.navbar.navbar-expand-lg.navbar-dark.fixed-top{style: "background-color: #2F75D1;"}
+      %a.navbar-brand{href: "#"} AgileLife
+      %ul.navbar-nav.mr-auto
+        %li.nav-item.active
+          %a.nav-link{href: current_user ? user_path : root_path}
+            Home
+            %span.sr-only (current)
+        %li.nav-item
+          %a.nav-link{href: groups_path} Groups
+        %li.nav-item
+          %a.nav-link{href: tasks_path} Tasks
+        %li.nav-item
+          %a.nav-link{href: events_path} Events
+      %ul.navbar-nav
+        %li.nav-item.dropdown
+          %a#navbar-user-dropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+            = current_user.name
+          .dropdown-menu{"aria-labelledby" => "navbar-user-dropdown"}
+            = link_to 'Settings', edit_user_path, class: 'dropdown-item'
+            .dropdown-divider
+            = link_to 'Logout', session_path, method: :delete, class: 'dropdown-item'
+
+    .container
+      = yield

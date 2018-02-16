@@ -1,0 +1,20 @@
+- collection.in_groups_of(2).each do |row|
+  .card-deck
+    - row.each do |item|
+      - if item
+        .card
+          .card-header.h5= link_to item.title, item, class: "card-link"
+          .card-body
+            %p.card-text
+            %dl.row
+              %dt.col-sm-4 Status:
+              %dd.col-sm-8= item.status
+              %dt.col-sm-4 Description:
+              %dd.col-sm-8= item.description
+              %dt.col-sm-4 Assigned To:
+              %dd.col-sm-8= item.owner.name
+              %dt.col-sm-4 Group:
+              %dd.col-sm-8= item.group.name
+
+      - else
+        .card

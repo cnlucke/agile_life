@@ -1,0 +1,36 @@
+<h1><%= current_user.name %></h1>
+<div class="row">
+  <div class="col-sm-4">
+    <ul class="left_nav">
+      <li><%= link_to 'My Tasks', user_path(user_action: "my_tasks")%></li>
+      <li><%= link_to 'My Created Tasks', user_path(user_action: "my_created_tasks") %></li>
+      <li><%= link_to 'My Events', user_path(user_action: "my_events") %></li>
+    </ul>
+  </div>
+
+  <div class="col-sm-8">
+    <% if current_user.created_tasks.empty? && current_user.owned_tasks.count == 0%>
+    <li>none</li>
+    <% else %>
+    <% case params["table"] %>
+    <% when "my_created_tasks" %>
+    <%= render partial: 'tasks/table', locals: {collection: current_user.created_tasks} %>
+    <% when "my_events" %>
+    <%= render partial: 'events/table', locals: {sorted_events: @sorted_events} %>
+    <% else %>
+    <% current_user.created_tasks.in_groups_of(3, false).each do |row| %>
+    <div class=“row”>
+      <% row.each do |col| %>
+      <div class=“col-sm-4”>
+        <div class="card">
+          <h5 class="card-title"><%= link_to col.title, col, class: "card-link" %></h5>
+        </div>
+      </div> <!-- end of column
+        <% end %>
+      </div> <!-- end of row -->
+      <% end %>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

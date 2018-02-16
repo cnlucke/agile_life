@@ -1,4 +1,37 @@
-<table class="table table-condensed table-bordered">
+<% collection.in_groups_of(3, false).each do |row| %>
+  <div class=“row”>
+    <% row.each do |col| %>
+        <div class=“col-sm-4”>
+        <div class="card">
+          <div class="card-block">
+            <div class="card-header">
+              <h5 class="card-title"><%= link_to col.title, col, class: "card-link" %></h5>
+            </div>
+            <p class="card-text"><strong>Description:</strong> <%= col.description %></p>
+            <% if col.creator == current_user  %>
+              <p class="card-text"><strong>Creator:</strong> You</p>
+            <% else %>
+              <p class="card-text"><strong>Creator:</strong> <%= col.creator.name %></p>
+            <% end %>
+            <% if col.owner == current_user %>
+              <p class="card-text"><strong>Assigned To:</strong> You</p>
+            <% else %>
+              <p class="card-text"><strong>Assigned To:</strong> <%= col.owner.name %></p>
+            <% end %>
+            <p class="card-text"><strong>Group:</strong> <%= col.group ? col.group.name : "none" %></p>
+            <p class="card-text"><strong>Status:</strong> <%= col.status %></p>
+            <div class="card-footer">
+
+            <p class="card-text"><small class="text-muted"><strong>Created At:</strong> <%= col.created_at.strftime("%m/%d/%y") %></small></p>
+          </div>
+        </div>
+      </div> <!-- end of card -->
+    </div> <!-- end of column -->
+    <% end %>
+  </div> <!-- end of row -->
+<% end %>
+
+<!-- <table class="table table-condensed table-bordered">
   <thead class="thead-light">
     <tr>
       <th>Title</th>
@@ -29,4 +62,4 @@
       </tr>
     <% end %>
   </tbody>
-</table>
+</table> -->
