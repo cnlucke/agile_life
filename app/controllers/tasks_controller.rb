@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   before_action :load_available_items, :authorize!, :set_type
 
   def index
+    @tasks = Task.all
     @created = Task.created(current_user).select { |t| t.owner_id != current_user.id }
     @owned = Task.owned(current_user)
     @unassigned = Task.unassigned

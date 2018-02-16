@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :authorize!
+  layout 'public'
 
   def new
   end

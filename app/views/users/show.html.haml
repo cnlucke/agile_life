@@ -11,8 +11,8 @@
     - else
       - case params["table"]
       - when "my_created_tasks"
-        = render partial: 'cards', locals: {collection: current_user.created_tasks}
+        = render partial: '/items/cards', locals: {collection: current_user.created_tasks}
       - when "my_events"
         = render partial: 'events/table', locals: {sorted_events: @sorted_events}
       - else
-        = render partial: 'cards', locals: {collection: current_user.owned_tasks}
+        = render partial: 'items/cards', locals: {collection: current_user.owned_tasks}
