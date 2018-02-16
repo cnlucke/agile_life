@@ -52,7 +52,7 @@ describe User do
 
     describe "given a name that already exists in the database" do
       it "will not create a new user" do
-        expect(User.create(name: "Tommy", password_digest: "123")).not_to eql(User.last)
+        expect(User.create(name: "Tommy", password_digest: "234")).not_to eql(User.last)
       end
     end
   end
