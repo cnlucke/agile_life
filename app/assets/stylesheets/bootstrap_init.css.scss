@@ -1,16 +1,5 @@
+$link-color:                 #2F75D1;
+$link-hover-color:           #205292;
+a {text-decoration: none !important}
+
 @import "bootstrap";
-
-/* Show it is fixed to the top */
-body {
-  min-height: 75rem;
-  padding-top: 4.5rem;
-}
-
-// .nav-pills > .active > a, .nav-pills > .active > a:hover {
-//     background-color: #2F75D1;
-// }
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #2F75D1;
-}

@@ -1,0 +1,30 @@
+.album.py-5
+  %a.btn.btn-blue.btn-sm{:href => new_task_path} New Task
+  %br/
+  %br/
+  - collection.in_groups_of(2, false).each do |row|
+    .card-deck
+      - row.each do |item|
+        - if item
+          .card.box-shadow.mb-4
+            .card-header.h5.card-link= link_to item.title, item
+            .card-body
+              %p.card-text
+              %dl.row
+                %dt.col-sm-4 Status:
+                %dd.col-sm-8= item.status
+                %dt.col-sm-4 Description:
+                %dd.col-sm-8= item.description
+                %dt.col-sm-4 Assigned To:
+                %dd.col-sm-8= item.owner.name
+                %dt.col-sm-4 Group:
+                %dd.col-sm-8= item.group.name
+                %dt.col-sm-4.small.text-muted Created:
+                %dd.col-sm-8.small.text-muted= item.created_at.strftime("%A, %B %d, %Y at %l:%M %P")
+              .d-flex.align-items-center
+                .btn-group
+                  %button.btn.btn-sm.btn-outline-secondary= link_to "View", item
+                  %button.btn.btn-sm.btn-outline-secondary= link_to "Edit", edit_task_path(item)
+
+        - else
+          .card

@@ -3,7 +3,7 @@
     <div class="alert alert-warning" role="alert"><strong style="color: red;"><%= flash[:notice] %></strong></div>
   <% end %>
   <br>
-  <h1>My Groups</h1>
+  <h2>My Groups</h2>
   <br>
   <ul>
     <% current_user.groups.each do |group| %>
@@ -19,7 +19,7 @@
       <li>NONE</li>
     <% end %>
   </ul>
-    <h1>Groups Available to Join</h1>
+    <h2>Groups Available to Join</h2>
     <br>
     <ul>
       <% @groups.each do |group| %>
@@ -38,6 +38,6 @@
     <li>NONE</li><br>
     <% end %>
     <br>
-    <a href="<%= new_group_path %>" class="btn-primary btn">Create New Group</a>
+    <a href="<%= new_group_path %>" class="btn btn-blue">Create New Group</a>
   </ul>
 </div>

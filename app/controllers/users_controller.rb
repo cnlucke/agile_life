@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   skip_before_action :authorize!, only: [:new, :create]
 
+  layout 'public', only: %w(new create)
+
   def new
     @user = User.new
   end

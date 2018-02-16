@@ -13,3 +13,93 @@
  *= require bootstrap_init
  *= require_self
  */
+
+ /* Show it is fixed to the top */
+ body {
+   min-height: 75rem;
+   padding-top: 4.5rem;
+   color: #212529 !important;
+   background-color: #f8f9fa !important;
+ }
+
+ .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+     color: #fff;
+     background-color: #2F75D1;
+ }
+
+ .btn-blue {
+   color: #fff;
+   background-color: #2F75D1;
+   border-color: #2F75D1;
+ }
+
+ li a {
+   color: #2F75D1;
+ }
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+ul.nav li a, ul.nav li a:visited {
+    color: #2F75D1 !important;
+}
+
+ul.nav li a:hover, ul.nav li a:active {
+    color: #2F75D1 !important;
+}
+
+ul.nav li.active a {
+    color: #2F75D1 !important;
+}
+
+#sidebar-wrapper {
+  top: 52px;
+  left: -200px;
+  width: 200px;
+  background-color: #c8ccd0;
+  color: white;
+  position: fixed;
+  height: 100%;
+  z-index: 1;
+}
+.sidebar-nav {
+  padding-top: 60px;
+  padding-left: 0;
+  position: absolute;
+  top: 0;
+  margin: 0;
+  width: 200px;
+  list-style: none;
+}
+.sidebar-nav li {
+  text-indent: 5px;
+  line-height: 50px;
+}
+.sidebar-nav li a {
+  color: white;
+  display: block;
+  text-decoration: none;
+}
+.sidebar-nav li a:hover {
+  background: #848d94;
+  color: white;
+  text-decoration: none;
+}
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+#sidebar-wrapper.sidebar-toggle {
+  transition: all 0.3s ease-out;
+  margin-left: -200px;
+}
+@media (min-width: 768px) {
+  #sidebar-wrapper.sidebar-toggle {
+    transition: 0s;
+    left: 200px;
+  }
+}
+
+.events {
+
+}
