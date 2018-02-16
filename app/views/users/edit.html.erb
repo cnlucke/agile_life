@@ -26,13 +26,12 @@
   <br>
   <br>
 
-  <h3 class="row">Delete Acount?</h3>
+  <h3>Delete Acount?</h3>
+  <br>
 
   <form action="<%= user_path %>" method="post">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <div class="form-group row">
       <input type="submit" value="Delete Account" class="btn-outline-danger btn-lg btn">
-    </div>
   </form>
 </div>
