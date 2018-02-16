@@ -18,6 +18,8 @@
  body {
    min-height: 75rem;
    padding-top: 4.5rem;
+   color: #212529 !important;
+   background-color: #f8f9fa !important;
  }
 
  .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
