@@ -6,14 +6,13 @@
     <% end %>
   <% end %>
   <br>
-
-  <%= form_tag session_path, class: "form-signin" do %>
+  <%= form_tag user_path, class: "form-signin" do %>
   <h1 class="logo">AgileLife</h1>
   <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
   <label for="inputName" class="sr-only">Name</label>
-  <%= text_field_tag :name, params[:name], class: "form-control", id: 'inputName', required: "", autofocus: "", placeholder: "Name" %>
+  <%= text_field_tag "user[name]", params[:name], class: "form-control", id: 'inputName', required: "", autofocus: "", placeholder: "Name" %>
   <label for="inputPassword" class="sr-only">Password</label>
-  <%= password_field_tag :password, "", class: "form-control", id: "inputPassword", placeholder: "Password", required: "" %>
+  <%= password_field_tag "user[password]", "", class: "form-control", id: "inputPassword", placeholder: "Password", required: "" %>
   <button class="btn btn-lg btn-primary btn-block btn-blue" type="submit">Sign Up</button>
   <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
 <% end %>
