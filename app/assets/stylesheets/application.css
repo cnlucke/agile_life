@@ -13,3 +13,24 @@
  *= require bootstrap_init
  *= require_self
  */
+
+ /* Show it is fixed to the top */
+ body {
+   min-height: 75rem;
+   padding-top: 4.5rem;
+ }
+
+ .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+     color: #fff;
+     background-color: #2F75D1;
+ }
+
+ .btn-blue {
+   color: #fff;
+   background-color: #2F75D1;
+   border-color: #2F75D1;
+ }
+
+ li a {
+   color: #2F75D1;
+ }

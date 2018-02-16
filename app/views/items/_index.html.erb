@@ -5,7 +5,7 @@
   <br>
 
   <% if @type == 'Task' %>
-    <h3>Your <%= @type.pluralize %>  <a href="<%= new_task_path %>" class="btn btn-primary btn-sm">New Task</a></h3>
+    <h3>Your <%= @type.pluralize %>  <a href="<%= new_task_path %>" class="btn btn-blue btn-sm">New Task</a></h3>
     <br>
     <%= render partial: 'table', locals: {collection: current_user.owned_tasks} %>
 

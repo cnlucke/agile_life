@@ -1,7 +1,4 @@
-<div class="container">
-  <br>
-  <h1>Create Account</h1>
-
+<!-- <div class="container"> -->
   <% if flash[:notice] %>
     <div class="alert alert-warning"><strong style="color: red;"><%= flash[:notice] %></strong></div>
     <% if flash[:notice] == "User already exists." %>
@@ -10,21 +7,14 @@
   <% end %>
   <br>
 
-  <%= form_for @user, url: user_path do |f| %>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <%= f.label :name %>
-        <%= f.text_field :name, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <%= f.label :password %>
-        <%= f.password_field :password, class: "form-control" %>
-      </div>
-    </div>
-
-
-    <%= f.submit 'Sign Up', class: "btn btn-primary"%>
-  <% end %>
-</div>
+  <%= form_tag session_path, class: "form-signin" do %>
+  <h1 class="logo">AgileLife</h1>
+  <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
+  <label for="inputName" class="sr-only">Name</label>
+  <%= text_field_tag :name, params[:name], class: "form-control", id: 'inputName', required: "", autofocus: "", placeholder: "Name" %>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <%= password_field_tag :password, "", class: "form-control", id: "inputPassword", placeholder: "Password", required: "" %>
+  <button class="btn btn-lg btn-primary btn-block btn-blue" type="submit">Sign Up</button>
+  <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
+<% end %>
+<!-- </div> -->
