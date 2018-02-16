@@ -1,9 +1,24 @@
 .row
   .col-sm-2
-    #v-pills-tab.nav.flex-column.nav-pills{"aria-orientation" => "vertical", :role => "tablist"}
-      = link_to "My Tasks", user_path(user_action: "my_tasks"), class: "nav-link"
-      = link_to "My Created Tasks", user_path(user_action: "my_created_tasks"), class: "nav-link"
-      = link_to "My Events", user_path(user_action: "my_events"), class: "nav-link"
+    .navbar-header
+    %a#menu-toggle.navbar-toggle{:href => "#"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    #sidebar-wrapper.sidebar-toggle
+      %ul.sidebar-nav
+        %li
+          %h5= link_to "My Tasks", user_path(user_action: "my_tasks"), class: "nav-link"
+        %li
+          %h5= link_to "My Created Tasks", user_path(user_action: "my_created_tasks"), class: "nav-link"
+        %li
+          %h5= link_to "My Events", user_path(user_action: "my_events"), class: "nav-link"
+
+    -# #v-pills-tab.nav.flex-column.nav-pills{"aria-orientation" => "vertical", :role => "tablist"}
+    -#   = link_to "My Tasks", user_path(user_action: "my_tasks"), class: "nav-link"
+    -#   = link_to "My Created Tasks", user_path(user_action: "my_created_tasks"), class: "nav-link"
+    -#   = link_to "My Events", user_path(user_action: "my_events"), class: "nav-link"
 
   .col-sm-10
     - if current_user.created_tasks.empty? && current_user.owned_tasks.count == 0

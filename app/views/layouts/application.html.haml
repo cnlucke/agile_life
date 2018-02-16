@@ -7,9 +7,13 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    -# %link#bootstrap-css{:href => "//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel => "stylesheet"}/
+    %script{:src => "//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"}
+    %script{:src => "//code.jquery.com/jquery-1.11.1.min.js"}
+
   %body
     %nav.navbar.navbar-expand-lg.navbar-dark.fixed-top{style: "background-color: #2F75D1;"}
-      %a.navbar-brand{href: "#"} AgileLife
+      %a.navbar-brand{href: current_user ? user_path : root_path} AgileLife
       %ul.navbar-nav.mr-auto
         %li.nav-item.active
           %a.nav-link{href: current_user ? user_path : root_path}
