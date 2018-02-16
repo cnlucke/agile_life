@@ -2,11 +2,26 @@
   <br>
   <h1>Edit Group</h1>
 
-<%= form_for @group do |f| %>
-  <%= f.label 'Group Name' %>
-  <%= f.text_field :name %><br>
-  <%= f.label 'Update Members' %><br>
-  <%= f.collection_check_boxes :member_ids, User.all[1...User.all.length], :id, :name %><br>
-  <%= f.submit %>
-<% end %>
+
+  <%= form_for @group do |f| %>
+    <div class="form-group row">
+      <%= f.label 'Group Name:', class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2">Update Members:</div>
+      <div class="col-sm-10">
+        <%= f.collection_check_boxes :member_ids, User.all[1...User.all.length], :id, :name do |cb| %>
+          <div class="form-check form-check-inline">
+            <%= cb.check_box class: "form-check-input" %>
+            <%= cb.label class: "form-check-label" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <%= f.submit 'Update Group', class: "btn btn-primary"%>
+  <% end %>
+
 </div>

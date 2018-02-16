@@ -1,14 +1,17 @@
 <div class="container">
+  <br>
   <h1><%= @item.title %></h1>
   <% if flash[:notice] %>
     <div class="alert alert-success" role="alert"><strong><%= flash[:notice] %></strong></div>
   <% end %>
+  <br>
   <% if @item.type == 'Event' %>
     <% if @item.all_day? %>
     <p>Date: <%= @item.starts_at.strftime("%A, %B %d, %Y") %></p>
     <% else %>
     <h3>Starts At: <%= @item.starts_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
     <h3>Ends At: <%= @item.ends_at.strftime("%A, %B %d, %Y at %l:%M %P") %></h3>
+    <br>
     <% end %>
   <% else %>
     <p><strong>Status:</strong> <strong><%= @item.status.upcase %></strong></p>
@@ -26,11 +29,11 @@
     </p>
   <p><strong>Description:</strong> <%= @item.description %></p>
   <p><strong>Notes:</strong> </p> <p><%= simple_format(@item.notes) %></p>
-  <p><strong>Creator:</strong> <%= @item.creator.name %> on <%= @item.created_at.strftime("%A, %B %d, %Y at %l:%M %P") %></p>
+  <p><strong>Created by:</strong> <%= @item.creator.name %> on <%= @item.created_at.strftime("%A, %B %d, %Y at %l:%M %P") %></p>
 
-  <p><%= link_to "Delete #{@item.type}", send("#{@item.type.downcase}_path"), method: 'delete' %></p>
-  <p><%= link_to "Edit", send("edit_#{@item.type.downcase}_path") %></p>
-  <p><%= link_to "See All #{@item.type.pluralize}", send("#{@item.type.downcase.pluralize}_path") %></p>
+  <%= link_to "Edit #{@item.type}", send("edit_#{@item.type.downcase}_path"), class: "btn btn-success" %>
+  <%= link_to "Delete #{@item.type}", send("#{@item.type.downcase}_path"), method: 'delete', data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+
 </div>
 <!-- #  id          :integer          not null, primary key
 #  type        :string

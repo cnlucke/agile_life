@@ -1,32 +1,85 @@
 <div class="container">
   <%= form_for @item do |f| %>
-  <h3><%= f.label "Title:" %><%= f.text_field :title %></h3>
-  <% if @type == 'Task' %>
-    <p><%= f.label "Status:" %>
-    <%= f.select :status, options_for_select(Task.statuses, @item.status) %></p>
-  <% end %>
-  <% if @type == 'Event' %>
-    <p>All Day? <%= check_box_tag 'check_box', true, @item.all_day? %></p>
-      <p><%= f.label :starts_at %>
-        <%= f.datetime_select :starts_at, :order => [:month, :day, :year], default: DateTime.now.beginning_of_day%></p>
-      <p><%= f.label :ends_at %>
-        <%= f.datetime_select :ends_at, :order => [:month, :day, :year], default: DateTime.now.end_of_day %></p>
-  <% end %>
-  <p>Creator: <%= current_user.name %></p>
-    <%= f.hidden_field :creator_id, value: current_user.id %>
-  <p><%= f.label "Group (Optional):" %>
-    <%= f.collection_select 'group_id', @groups, :id, :name, include_blank: true %></p>
+    <div class="form-group row">
+      <%= f.label "Title:", class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+    </div>
     <% if @type == 'Task' %>
-  <p><%= f.label "Assign To:" %>
-    <%= f.collection_select 'owner_id', @users, :id, :name, @item.owner.nil? ? {selected: @users.first } : {selected: @item.owner_id } %></p>
+      <div class="form-group row">
+        <%= f.label "Status:", class: "col-sm-2 col-form-label" %>
+        <div class="col-sm-10">
+          <%= f.select :status, options_for_select(Task.statuses, @item.status), class: "form-control" %>
+        </div>
+      </div>
     <% end %>
-  <p><%= f.label "Make This Task a Subtask Of:" %>
-    <%= f.collection_select 'parent_id', @available_items, :id, :title, include_blank: true %></p>
-  <p><%= f.label "Description:" %>
-    <%= f.text_area :description %></p>
-  <p><%= f.label "Notes:" %>
-    <%= f.text_area :notes %></p>
-    <p><%= f.submit %></p>
+    <% if @type == 'Event' %>
+      <div class="form-group row">
+        <div class="col-sm-2">
+          All Day Event?
+        </div>
+        <div class="col-sm-10">
+          <div class="form-check">
+            <%= check_box_tag 'check_box', true, @item.all_day? %>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= f.label :starts_at, class: "col-sm-2 col-form-label" %>
+        <div class="col-sm-10">
+          <%= f.datetime_select :starts_at, :order => [:month, :day, :year], default: DateTime.now.beginning_of_day, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= f.label :ends_at, class: "col-sm-2 col-form-label" %>
+        <div class="col-sm-10">
+          <%= f.datetime_select :ends_at, :order => [:month, :day, :year], default: DateTime.now.end_of_day, class: "form-control" %>
+        </div>
+      </div>
+    <% end %>
+    <div class="form-group row">
+      <%= f.label "Group:", class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= f.collection_select 'group_id', @groups, :id, :name, include_blank: true, class: "form-control" %>
+        <small class="form-text text-muted">Optional</small>
+      </div>
+    </div>
+    <% if @type == 'Task' %>
+      <div class="form-group row">
+        <%= f.label "Assign To:", class: "col-sm-2 col-form-label" %>
+        <div class="col-sm-10">
+          <%= f.collection_select 'owner_id', @users[1...@users.length], :id, :name, @item.owner.nil? ? {selected: @users.first } : {selected: @item.owner_id }, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= f.label "Make This a Subtask Of:", class: "col-sm-2 col-form-label" %>
+        <div class="col-sm-10">
+          <%= f.collection_select 'parent_id', @available_items, :id, :title, include_blank: true, class: "form-control" %>
+          <small class="form-text text-muted">Optional</small>
+        </div>
+      </div>
+    <% end %>
+    <div class="form-group row">
+      <%= f.label "Description:", class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= f.text_area :description, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= f.label "Notes:", class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= f.text_area :notes, class: "form-control" %>
+      </div>
+    </div>
+    <% if !@item.creator_id || @item.creator_id == 1 %>
+      <%= f.hidden_field :creator_id, value: current_user.id %>
+    <% end %>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= f.submit "Submit", class: "btn btn-primary" %>
+        <%= link_to "Cancel", send("#{@type.downcase.pluralize}_path"), class: "btn btn-danger" %>
+      </div>
+    </div>
   <% end %>
-  <p><%= link_to "Back", send("#{@type.downcase.pluralize}_path") %></p>
 </div>

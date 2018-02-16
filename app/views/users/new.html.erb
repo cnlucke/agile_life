@@ -1,17 +1,30 @@
 <div class="container">
-  <h1>Sign Up</h1>
+  <br>
+  <h1>Create Account</h1>
+
   <% if flash[:notice] %>
     <div class="alert alert-warning"><strong style="color: red;"><%= flash[:notice] %></strong></div>
     <% if flash[:notice] == "User already exists." %>
-      <p>Would you like to <%= link_to "login", new_session_path %>?</p>
+      <p>Would you like to <%= link_to "sign in?", new_session_path %>?</p>
     <% end %>
-  <% end %><br>
+  <% end %>
+  <br>
 
   <%= form_for @user, url: user_path do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %><br>
-    <%= f.label :password %>
-    <%= f.password_field :password %><br>
-    <%= f.submit %>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+    </div>
+
+
+    <%= f.submit 'Sign Up', class: "btn btn-primary"%>
   <% end %>
 </div>
